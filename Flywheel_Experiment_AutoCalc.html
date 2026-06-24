@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Physics Lab Experiment #4 - Flywheel</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+body{font-family:"Times New Roman",serif;max-width:980px;margin:auto;padding:24px;color:#111;font-size:18px;line-height:1.25}
+h1,h2,h3{margin:0 0 12px}
+h1{font-size:24px;text-align:left}
+h2{font-size:22px;text-align:left}
+h3{font-size:20px;text-align:center;font-weight:normal}
+.section{margin-top:28px}
+.caption{text-align:center;margin:12px 0 6px;font-size:19px}
+table{width:100%;border-collapse:collapse;margin:8px 0 30px;table-layout:fixed}
+th,td{border:1px solid #000;text-align:center;vertical-align:middle;padding:8px 6px;font-weight:normal}
+th{line-height:1.15}
+input{box-sizing:border-box;width:100%;border:0;background:transparent;text-align:center;font-family:inherit;font-size:17px;padding:5px 2px}
+input::placeholder{color:#777;opacity:1}
+input[readonly]{color:#000}
+.short{width:155px;border-bottom:1px solid #000;display:inline-block;text-align:center;min-height:24px}
+.line-input{display:inline-block;width:180px;border-bottom:1px solid #000;vertical-align:baseline}
+.calc-block{margin:22px 0 28px}
+.calc-block h3{text-align:left;font-weight:bold;font-size:22px;margin-bottom:12px}
+.calc-row{display:flex;align-items:center;gap:12px;margin:12px 0;flex-wrap:wrap}
+.formula{font-size:21px;margin:14px 0}
+.result-table th{font-size:20px}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:10px 0 26px}
+.chart-box{border:1px solid #000;padding:10px}
+.chart-title{text-align:center;font-weight:bold;margin-bottom:8px}
+canvas{width:100%;height:260px;display:block}
+.auto-report-box{min-height:86px;border:1px solid #000;padding:12px;margin:8px 0 18px;text-align:justify;white-space:pre-wrap}
+.auto-report-title{font-weight:bold;margin-top:12px}
+.footer{margin:34px 0 10px;padding-top:12px;border-top:1px solid #000;text-align:center;font-size:15px;font-family:Arial,sans-serif;letter-spacing:.2px}
+button{font-family:Arial,sans-serif;font-size:16px;padding:10px 16px;margin:12px 0 30px;cursor:pointer}
+@media (max-width:760px){.chart-grid{grid-template-columns:1fr}}
+@media print{
+  button{display:none}
+  body{max-width:none;padding:10px;font-size:17px}
+  input::placeholder{color:transparent}
+  canvas{height:220px}
+}
+</style>
+</head>
+<body>
+
+<h1>Experiment No. 4:</h1>
+<p>To determine the moment of inertia of a flywheel about its axis of rotation.</p>
+
+<div class="section">
+<h2>4.8 Experimental Data:</h2>
+<div class="caption">Table 4.1: Readings for n, N and t for different M and h.</div>
+<table id="readingsTable">
+<tr>
+<th rowspan="2" style="width:9%">Obs.<br>No.</th>
+<th rowspan="2" style="width:23%">Mass<br>Suspended<br>M<br>(kg)</th>
+<th rowspan="2" style="width:16%">Height above<br>the ground<br>h<br>(m)</th>
+<th colspan="2" style="width:30%">No. of revolutions</th>
+<th rowspan="2" style="width:17%">Time for N<br>rotations<br>t<br>(s)</th>
+</tr>
+<tr>
+<th>n</th>
+<th>N</th>
+</tr>
+<tr>
+<td>1</td>
+<td><input id="mass1" type="number" step="any" placeholder="Input mass1"></td>
+<td><input id="height1" type="number" step="any" placeholder="Input height1"></td>
+<td><input id="n1" type="number" step="any" placeholder="Input n1"></td>
+<td><input id="bigN1" type="number" step="any" placeholder="Input N1"></td>
+<td><input id="time1" type="number" step="any" placeholder="Input time1"></td>
+</tr>
+<tr>
+<td>2</td>
+<td><input id="mass2" type="number" step="any" placeholder="Input mass2"></td>
+<td><input id="height2" type="number" step="any" placeholder="Input height2"></td>
+<td><input id="n2" type="number" step="any" placeholder="Input n2"></td>
+<td><input id="bigN2" type="number" step="any" placeholder="Input N2"></td>
+<td><input id="time2" type="number" step="any" placeholder="Input time2"></td>
+</tr>
+<tr>
+<td>3</td>
+<td><input id="mass3" type="number" step="any" placeholder="Input mass3"></td>
+<td><input id="height3" type="number" step="any" placeholder="Input height3"></td>
+<td><input id="n3" type="number" step="any" placeholder="Input n3"></td>
+<td><input id="bigN3" type="number" step="any" placeholder="Input N3"></td>
+<td><input id="time3" type="number" step="any" placeholder="Input time3"></td>
+</tr>
+</table>
+
+<div class="caption">Table 4.2: Reading for the radius of axle of the flywheel.</div>
+<table id="radiusTable">
+<tr>
+<th style="width:9%">Obs.<br>No.</th>
+<th>M.S.R.<br>x<br>(cm)</th>
+<th>V.S.D.<br>a</th>
+<th>V.S.R<br>y = a.c<br>(cm)</th>
+<th>Diameter<br>d = x+y<br>(cm)</th>
+<th>Mean<br>Diameter<br>d<br>(cm)</th>
+<th>Mean<br>Radius<br>r<br>(cm)</th>
+</tr>
+<tr>
+<td>1</td>
+<td><input id="msr1" type="number" step="any" placeholder="Input msr1"></td>
+<td><input id="vsd1" type="number" step="any" placeholder="Input vsd1"></td>
+<td><input id="vsr1" type="number" step="any" placeholder="Input vsr1" readonly></td>
+<td><input id="diameter1" type="number" step="any" placeholder="Auto diameter1" readonly></td>
+<td rowspan="3"><input id="meanDiameter" type="number" step="any" placeholder="Auto mean diameter" readonly></td>
+<td rowspan="3"><input id="meanRadiusCm" type="number" step="any" placeholder="Auto mean radius" readonly></td>
+</tr>
+<tr>
+<td>2</td>
+<td><input id="msr2" type="number" step="any" placeholder="Input msr2"></td>
+<td><input id="vsd2" type="number" step="any" placeholder="Input vsd2"></td>
+<td><input id="vsr2" type="number" step="any" placeholder="Input vsr2" readonly></td>
+<td><input id="diameter2" type="number" step="any" placeholder="Auto diameter2" readonly></td>
+</tr>
+<tr>
+<td>3</td>
+<td><input id="msr3" type="number" step="any" placeholder="Input msr3"></td>
+<td><input id="vsd3" type="number" step="any" placeholder="Input vsd3"></td>
+<td><input id="vsr3" type="number" step="any" placeholder="Input vsr3" readonly></td>
+<td><input id="diameter3" type="number" step="any" placeholder="Auto diameter3" readonly></td>
+</tr>
+<tr>
+<td colspan="7" style="height:52px;font-size:20px">Mean Radius of the Axel, r = <span id="meanRadiusMText" class="short"></span> m.</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2>4.9 Calculations:</h2>
+
+<div class="calc-block">
+<h3>A. For Mass M = <span id="massText1" class="line-input"></span> kg:</h3>
+<div class="calc-row">Height, h = <span id="heightText1" class="line-input"></span></div>
+<div class="calc-row">Radius of the Axel, r = <span id="radiusText1" class="line-input"></span></div>
+<div class="calc-row">No. of rotations, n = <span id="nText1" class="line-input"></span> and N = <span id="bigNText1" class="line-input"></span></div>
+<div class="formula">Angular velocity, &nbsp; \( \omega = \dfrac{4\pi N}{t} \) = <span id="omegaText1" class="line-input"></span></div>
+<div class="formula">Moment of Inertia, &nbsp; \( I_1 = \dfrac{NM}{N+n}\left(\dfrac{2gh}{\omega^2}-r^2\right) \) = <span id="inertiaText1" class="line-input"></span></div>
+</div>
+
+<div class="calc-block">
+<h3>B. For Mass M = <span id="massText2" class="line-input"></span> kg:</h3>
+<div class="calc-row">Height, h = <span id="heightText2" class="line-input"></span></div>
+<div class="calc-row">Radius of the Axel, r = <span id="radiusText2" class="line-input"></span></div>
+<div class="calc-row">No. of rotations, n = <span id="nText2" class="line-input"></span> and N = <span id="bigNText2" class="line-input"></span></div>
+<div class="formula">Angular velocity, &nbsp; \( \omega = \dfrac{4\pi N}{t} \) = <span id="omegaText2" class="line-input"></span></div>
+<div class="formula">Moment of Inertia, &nbsp; \( I_2 = \dfrac{NM}{N+n}\left(\dfrac{2gh}{\omega^2}-r^2\right) \) = <span id="inertiaText2" class="line-input"></span></div>
+</div>
+
+<div class="calc-block">
+<h3>C. For Mass M = <span id="massText3" class="line-input"></span> kg:</h3>
+<div class="calc-row">Height, h = <span id="heightText3" class="line-input"></span></div>
+<div class="calc-row">Radius of the Axel, r = <span id="radiusText3" class="line-input"></span></div>
+<div class="calc-row">No. of rotations, n = <span id="nText3" class="line-input"></span> and N = <span id="bigNText3" class="line-input"></span></div>
+<div class="formula">Angular velocity, &nbsp; \( \omega = \dfrac{4\pi N}{t} \) = <span id="omegaText3" class="line-input"></span></div>
+<div class="formula">Moment of Inertia, &nbsp; \( I_3 = \dfrac{NM}{N+n}\left(\dfrac{2gh}{\omega^2}-r^2\right) \) = <span id="inertiaText3" class="line-input"></span></div>
+</div>
+</div>
+
+<div class="section">
+<h2>4.10 Result:</h2>
+<table id="resultTable" class="result-table">
+<tr>
+<th style="width:18%">No. of Obs.</th>
+<th>Moment of Inertia<br>of the given flywheel<br>(kg.m<sup>2</sup>)</th>
+<th>Mean Moment of Inertia<br>of the flywheel<br>(kg.m<sup>2</sup>)</th>
+</tr>
+<tr>
+<td>1</td>
+<td><input id="resultI1" type="number" step="any" placeholder="Auto inertia1" readonly></td>
+<td rowspan="3"><input id="meanInertia" type="number" step="any" placeholder="Auto mean inertia" readonly></td>
+</tr>
+<tr>
+<td>2</td>
+<td><input id="resultI2" type="number" step="any" placeholder="Auto inertia2" readonly></td>
+</tr>
+<tr>
+<td>3</td>
+<td><input id="resultI3" type="number" step="any" placeholder="Auto inertia3" readonly></td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2>Necessary Graphs and Charts:</h2>
+<div class="chart-grid">
+<div class="chart-box">
+<div class="chart-title">Moment of Inertia for Different Observations</div>
+<canvas id="inertiaChart"></canvas>
+</div>
+<div class="chart-box">
+<div class="chart-title">Angular Velocity for Different Observations</div>
+<canvas id="omegaChart"></canvas>
+</div>
+</div>
+</div>
+
+<div class="section">
+<h2>4.10&nbsp;&nbsp; Discussion:</h2>
+<div id="autoDiscussion" class="auto-report-box"></div>
+<div class="auto-report-title">Comment:</div>
+<div id="autoComment" class="auto-report-box"></div>
+</div>
+
+<button onclick="window.print()">Print / Save PDF</button>
+
+<footer class="footer">All rights reserved NAHID | <a href="https://www.hexagonlabo.org" target="_blank">hexagonlabo.org</a></footer>
+
+<script>
+const g = 9.8;
+const leastCount = 0.01;
+
+function value(id){
+  const n = parseFloat(document.getElementById(id).value);
+  return Number.isFinite(n) ? n : null;
+}
+
+function writeInput(id, val, digits = 4){
+  document.getElementById(id).value = Number.isFinite(val) ? val.toFixed(digits) : "";
+}
+
+function writeText(id, val, digits = 4){
+  document.getElementById(id).textContent = Number.isFinite(val) ? val.toFixed(digits) : "";
+}
+
+function copyText(id, val){
+  document.getElementById(id).textContent = val ?? "";
+}
+
+function formatNumber(val, digits = 6){
+  return Number.isFinite(val) ? val.toFixed(digits) : "";
+}
+
+function writeAutoReport(inertias, meanI, radiusM){
+  const discussion = document.getElementById("autoDiscussion");
+  const comment = document.getElementById("autoComment");
+  if(!inertias.length || !Number.isFinite(meanI)){
+    discussion.textContent = "The discussion will be generated automatically after the required experimental data are entered.";
+    comment.textContent = "The comment will be generated automatically after the moment of inertia is calculated.";
+    return;
+  }
+
+  const values = inertias.map((val, index) => "I" + (index + 1) + " = " + formatNumber(val) + " kg.m2").join(", ");
+  const maxI = Math.max(...inertias);
+  const minI = Math.min(...inertias);
+  const variation = meanI ? ((maxI - minI) / meanI) * 100 : 0;
+  const agreement = variation <= 10 ? "The calculated values are close to one another, so the observations are reasonably consistent." : "Some variation is present among the readings, which may be due to timing error, frictional loss, or counting error in the rotations.";
+
+  discussion.textContent =
+    "For the flywheel experiment, the moment of inertia was calculated from the measured mass, height, number of rotations, time, and radius of the axle. " +
+    "The obtained values are " + values + ". The mean radius of the axle is " + formatNumber(radiusM) + " m and the mean moment of inertia of the flywheel is " + formatNumber(meanI) + " kg.m2. " +
+    agreement + " The small differences between observations may occur because of stopwatch reaction time, friction at the axle, slipping of the cord, and uncertainty in measuring the radius.";
+
+  comment.textContent =
+    "Hence, the moment of inertia of the given flywheel about its axis of rotation is " + formatNumber(meanI) + " kg.m2. " +
+    "The result shows that the moment of inertia remains nearly the same for different suspended masses, as expected for the same flywheel.";
+}
+
+function prepareCanvas(canvas){
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = Math.max(1, Math.round(rect.width * dpr));
+  canvas.height = Math.max(1, Math.round(rect.height * dpr));
+  const ctx = canvas.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return {ctx, width: rect.width, height: rect.height};
+}
+
+function drawBarChart(canvasId, values, label, color){
+  const canvas = document.getElementById(canvasId);
+  const {ctx, width, height} = prepareCanvas(canvas);
+  ctx.clearRect(0, 0, width, height);
+  ctx.font = "14px Times New Roman";
+  ctx.fillStyle = "#111";
+  const valid = values.filter(Number.isFinite);
+  if(!valid.length){
+    ctx.textAlign = "center";
+    ctx.fillText("Chart will appear after data is entered.", width / 2, height / 2);
+    return;
+  }
+
+  const left = 54, right = 18, top = 18, bottom = 42;
+  const plotW = width - left - right;
+  const plotH = height - top - bottom;
+  const maxVal = Math.max(...valid) * 1.15 || 1;
+
+  ctx.strokeStyle = "#000";
+  ctx.beginPath();
+  ctx.moveTo(left, top);
+  ctx.lineTo(left, top + plotH);
+  ctx.lineTo(left + plotW, top + plotH);
+  ctx.stroke();
+
+  ctx.textAlign = "right";
+  ctx.fillText(maxVal.toPrecision(3), left - 6, top + 5);
+  ctx.fillText("0", left - 6, top + plotH + 4);
+
+  const slot = plotW / values.length;
+  values.forEach((val, index) => {
+    if(!Number.isFinite(val)) return;
+    const barW = Math.min(64, slot * 0.55);
+    const barH = (val / maxVal) * plotH;
+    const x = left + slot * index + (slot - barW) / 2;
+    const y = top + plotH - barH;
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, barW, barH);
+    ctx.strokeStyle = "#000";
+    ctx.strokeRect(x, y, barW, barH);
+    ctx.fillStyle = "#111";
+    ctx.textAlign = "center";
+    ctx.fillText("Obs. " + (index + 1), left + slot * index + slot / 2, top + plotH + 24);
+  });
+
+  ctx.save();
+  ctx.translate(16, top + plotH / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.textAlign = "center";
+  ctx.fillText(label, 0, 0);
+  ctx.restore();
+}
+
+function drawLineChart(canvasId, values, label, color){
+  const canvas = document.getElementById(canvasId);
+  const {ctx, width, height} = prepareCanvas(canvas);
+  ctx.clearRect(0, 0, width, height);
+  ctx.font = "14px Times New Roman";
+  ctx.fillStyle = "#111";
+  const valid = values.filter(Number.isFinite);
+  if(!valid.length){
+    ctx.textAlign = "center";
+    ctx.fillText("Chart will appear after data is entered.", width / 2, height / 2);
+    return;
+  }
+
+  const left = 54, right = 18, top = 18, bottom = 42;
+  const plotW = width - left - right;
+  const plotH = height - top - bottom;
+  const maxVal = Math.max(...valid) * 1.15 || 1;
+
+  ctx.strokeStyle = "#000";
+  ctx.beginPath();
+  ctx.moveTo(left, top);
+  ctx.lineTo(left, top + plotH);
+  ctx.lineTo(left + plotW, top + plotH);
+  ctx.stroke();
+
+  ctx.textAlign = "right";
+  ctx.fillText(maxVal.toPrecision(3), left - 6, top + 5);
+  ctx.fillText("0", left - 6, top + plotH + 4);
+
+  const points = values.map((val, index) => {
+    const x = left + (values.length === 1 ? plotW / 2 : (plotW / (values.length - 1)) * index);
+    const y = Number.isFinite(val) ? top + plotH - (val / maxVal) * plotH : null;
+    return {x, y, val, index};
+  }).filter(point => point.y !== null);
+
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  points.forEach((point, index) => {
+    if(index === 0) ctx.moveTo(point.x, point.y);
+    else ctx.lineTo(point.x, point.y);
+  });
+  ctx.stroke();
+
+  points.forEach(point => {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "#000";
+    ctx.stroke();
+    ctx.fillStyle = "#111";
+    ctx.textAlign = "center";
+    ctx.fillText("Obs. " + (point.index + 1), point.x, top + plotH + 24);
+  });
+
+  ctx.save();
+  ctx.translate(16, top + plotH / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.textAlign = "center";
+  ctx.fillText(label, 0, 0);
+  ctx.restore();
+}
+
+function drawCharts(inertias, omegas){
+  drawBarChart("inertiaChart", inertias, "Moment of inertia (kg.m2)", "#9fbad6");
+  drawLineChart("omegaChart", omegas, "Angular velocity (rad/s)", "#d59b64");
+}
+
+function calculate(){
+  const diameters = [];
+  for(let i = 1; i <= 3; i++){
+    const x = value("msr" + i);
+    const a = value("vsd" + i);
+    const y = a === null ? null : a * leastCount;
+    const d = x === null || y === null ? null : x + y;
+    writeInput("vsr" + i, y, 4);
+    writeInput("diameter" + i, d, 4);
+    if(d !== null) diameters.push(d);
+  }
+
+  const meanD = diameters.length ? diameters.reduce((sum, n) => sum + n, 0) / diameters.length : null;
+  const meanRadiusCm = meanD === null ? null : meanD / 2;
+  const radiusM = meanRadiusCm === null ? null : meanRadiusCm / 100;
+  writeInput("meanDiameter", meanD, 4);
+  writeInput("meanRadiusCm", meanRadiusCm, 4);
+  writeText("meanRadiusMText", radiusM, 6);
+
+  const inertias = [];
+  const omegas = [];
+  for(let i = 1; i <= 3; i++){
+    const M = value("mass" + i);
+    const h = value("height" + i);
+    const n = value("n" + i);
+    const N = value("bigN" + i);
+    const t = value("time" + i);
+    const omega = N !== null && t ? (4 * Math.PI * N) / t : null;
+    const inertia = M !== null && h !== null && n !== null && N !== null && radiusM !== null && omega
+      ? (N * M / (N + n)) * (((2 * g * h) / (omega * omega)) - (radiusM * radiusM))
+      : null;
+
+    copyText("massText" + i, M === null ? "" : M);
+    copyText("heightText" + i, h === null ? "" : h);
+    writeText("radiusText" + i, radiusM, 6);
+    copyText("nText" + i, n === null ? "" : n);
+    copyText("bigNText" + i, N === null ? "" : N);
+    writeText("omegaText" + i, omega, 4);
+    writeText("inertiaText" + i, inertia, 6);
+    writeInput("resultI" + i, inertia, 6);
+    if(inertia !== null) inertias.push(inertia);
+    omegas.push(omega);
+  }
+
+  const meanI = inertias.length ? inertias.reduce((sum, n) => sum + n, 0) / inertias.length : null;
+  writeInput("meanInertia", meanI, 6);
+  writeAutoReport(inertias, meanI, radiusM);
+  drawCharts([value("resultI1"), value("resultI2"), value("resultI3")], omegas);
+}
+
+document.addEventListener("input", calculate);
+window.addEventListener("resize", calculate);
+calculate();
+</script>
+
+</body>
+</html>
