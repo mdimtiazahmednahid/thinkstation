@@ -8,8 +8,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <style>
 
 body{
@@ -91,65 +89,8 @@ button:hover{
     background:#084dbd;
 }
 
-.graph-section{
-    margin-top:50px;
-    page-break-before:always;
-}
-
-.chart-container{
-    width:100%;
-    height:450px;
-    margin:40px 0;
-    background:#fff;
-    border:1px solid #ddd;
-    border-radius:8px;
-    padding:20px;
-    box-shadow:0 10px 24px rgba(15, 23, 42, 0.06);
-}
-
-.graph-buttons{
-    text-align:center;
-    margin:20px 0;
-}
-
-.download-btn{
-    padding:12px 20px;
-    border:none;
-    background:#16a34a;
-    color:white;
-    cursor:pointer;
-    border-radius:5px;
-    margin:5px;
-}
-
-.download-btn:hover{
-    opacity:0.9;
-}
-
-footer{
-    text-align:center;
-    margin-top:40px;
-    padding-top:20px;
-    border-top:1px solid #ccc;
-    font-size:12px;
-    color:#666;
-}
-
-footer a{
-    color:#0d6efd;
-    text-decoration:none;
-}
-
-footer a:hover{
-    text-decoration:underline;
-}
-
 @media print{
     button{
-        display:none;
-    }
-
-    footer{
         display:none;
     }
 
@@ -221,29 +162,29 @@ t<br>
 
 <tr>
 <td>1</td>
-<td><input id="m1" placeholder="Enter Mass"></td>
-<td><input id="h1" placeholder="Enter Height"></td>
-<td><input id="n1" placeholder="Enter n"></td>
-<td><input id="N1" placeholder="Enter N"></td>
-<td><input id="t1" placeholder="Enter Time"></td>
+<td><input placeholder="Enter Mass"></td>
+<td><input placeholder="Enter Height"></td>
+<td><input placeholder="Enter n"></td>
+<td><input placeholder="Enter N"></td>
+<td><input placeholder="Enter Time"></td>
 </tr>
 
 <tr>
 <td>2</td>
-<td><input id="m2" placeholder="Enter Mass"></td>
-<td><input id="h2" placeholder="Enter Height"></td>
-<td><input id="n2" placeholder="Enter n"></td>
-<td><input id="N2" placeholder="Enter N"></td>
-<td><input id="t2" placeholder="Enter Time"></td>
+<td><input placeholder="Enter Mass"></td>
+<td><input placeholder="Enter Height"></td>
+<td><input placeholder="Enter n"></td>
+<td><input placeholder="Enter N"></td>
+<td><input placeholder="Enter Time"></td>
 </tr>
 
 <tr>
 <td>3</td>
-<td><input id="m3" placeholder="Enter Mass"></td>
-<td><input id="h3" placeholder="Enter Height"></td>
-<td><input id="n3" placeholder="Enter n"></td>
-<td><input id="N3" placeholder="Enter N"></td>
-<td><input id="t3" placeholder="Enter Time"></td>
+<td><input placeholder="Enter Mass"></td>
+<td><input placeholder="Enter Height"></td>
+<td><input placeholder="Enter n"></td>
+<td><input placeholder="Enter N"></td>
+<td><input placeholder="Enter Time"></td>
 </tr>
 
 </table>
@@ -380,90 +321,9 @@ cm
 
 </div>
 
-<h2>Calculations & Results</h2>
-
-<button onclick="calculate()">
-Calculate
-</button>
-
-<table class="lab-table">
-
-<caption>
-Table 4.3: Calculated Values for Angular Velocity and Moment of Inertia
-</caption>
-
-<tr>
-<th>Obs. No.</th>
-<th>ω (rad/s)</th>
-<th>Moment of Inertia I (kg·m²)</th>
-</tr>
-
-<tr>
-<td>1</td>
-<td id="w1">-</td>
-<td id="i1">-</td>
-</tr>
-
-<tr>
-<td>2</td>
-<td id="w2">-</td>
-<td id="i2">-</td>
-</tr>
-
-<tr>
-<td>3</td>
-<td id="w3">-</td>
-<td id="i3">-</td>
-</tr>
-
-</table>
-
-<div class="footer-box">
-
-Mean Moment of Inertia =
-<span class="result" id="meanI">0</span>
-kg·m²
-
 </div>
-
-<div class="graph-section">
-
-<h2>Experimental Graphs</h2>
-
-<div class="chart-container">
-<canvas id="omegaChart"></canvas>
-</div>
-
-<div class="chart-container">
-<canvas id="inertiaChart"></canvas>
-</div>
-
-<div class="graph-buttons">
-
-<button class="download-btn" onclick="downloadGraph('omegaChart','Angular_Velocity_Graph')">
-Download Angular Velocity Graph
-</button>
-
-<button class="download-btn" onclick="downloadGraph('inertiaChart','Moment_of_Inertia_Graph')">
-Download Moment of Inertia Graph
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<footer>
-<p>© All rights reserved. NAHID@HEXAGONLAB | <a href="https://www.hexagonlabo.org" target="_blank">www.hexagonlabo.org</a></p>
-</footer>
 
 <script>
-
-let omegaData = [];
-let inertiaData = [];
-let omegaChart = null;
-let inertiaChart = null;
 
 function calculateRadius(){
 
@@ -503,142 +363,6 @@ document.querySelectorAll(".x,.y")
 .forEach(el=>{
 el.addEventListener("input",calculateRadius);
 });
-
-function calculate(){
-
-const g = 9.81;
-const r = (parseFloat(document.getElementById("meanRadius").innerHTML) || 0) / 100;
-
-let values = [];
-omegaData = [];
-inertiaData = [];
-
-for(let k=1;k<=3;k++){
-
-let M = parseFloat(document.getElementById("m"+k).value);
-let h = parseFloat(document.getElementById("h"+k).value);
-let n = parseFloat(document.getElementById("n"+k).value);
-let N = parseFloat(document.getElementById("N"+k).value);
-let t = parseFloat(document.getElementById("t"+k).value);
-
-if(isNaN(M) || isNaN(h) || isNaN(n) || isNaN(N) || isNaN(t)){
-continue;
-}
-
-let omega = (4*Math.PI*N)/t;
-
-let I = ((N*M)/(N+n)) * (((2*g*h)/(omega*omega)) - (r*r));
-
-document.getElementById("w"+k).innerHTML = omega.toFixed(4);
-document.getElementById("i"+k).innerHTML = I.toExponential(4);
-
-omegaData.push(omega);
-inertiaData.push(I);
-values.push(I);
-}
-
-if(values.length){
-let mean = values.reduce((a,b)=>a+b,0)/values.length;
-document.getElementById("meanI").innerHTML = mean.toExponential(4);
-}
-
-updateGraphs();
-}
-
-function updateGraphs(){
-
-const observationNumbers = [1, 2, 3];
-
-const omegaCtx = document.getElementById("omegaChart").getContext("2d");
-const inertiaCtx = document.getElementById("inertiaChart").getContext("2d");
-
-if(omegaChart){
-omegaChart.destroy();
-}
-
-if(inertiaChart){
-inertiaChart.destroy();
-}
-
-omegaChart = new Chart(omegaCtx, {
-type: "line",
-data: {
-labels: observationNumbers.slice(0, omegaData.length),
-datasets: [{
-label: "Angular Velocity, ω (rad/s)",
-data: omegaData,
-borderColor: "#0d6efd",
-backgroundColor: "rgba(13, 110, 253, 0.18)",
-tension: 0.25,
-fill: true,
-pointRadius: 4,
-pointBackgroundColor: "#0d6efd"
-}]
-},
-options: {
-plugins: {
-title: {
-display: true,
-text: "Angular Velocity vs Observation Number",
-font: { size: 18 }
-},
-legend: { display: false }
-},
-scales: {
-x: {
-title: { display: true, text: "Observation Number" }
-},
-y: {
-title: { display: true, text: "Angular Velocity, ω (rad/s)" }
-}
-}
-}
-});
-
-inertiaChart = new Chart(inertiaCtx, {
-type: "line",
-data: {
-labels: observationNumbers.slice(0, inertiaData.length),
-datasets: [{
-label: "Moment of Inertia, I (kg·m²)",
-data: inertiaData,
-borderColor: "#16a34a",
-backgroundColor: "rgba(22, 163, 74, 0.18)",
-tension: 0.25,
-fill: true,
-pointRadius: 4,
-pointBackgroundColor: "#16a34a"
-}]
-},
-options: {
-plugins: {
-title: {
-display: true,
-text: "Moment of Inertia vs Observation Number",
-font: { size: 18 }
-},
-legend: { display: false }
-},
-scales: {
-x: {
-title: { display: true, text: "Observation Number" }
-},
-y: {
-title: { display: true, text: "Moment of Inertia, I (kg·m²)" }
-}
-}
-}
-});
-}
-
-function downloadGraph(canvasId,fileName){
-
-const canvas = document.getElementById(canvasId);
-const link = document.createElement("a");
-link.download = fileName + ".png";
-link.href = canvas.toDataURL("image/png",1.0);
-link.click();
-}
 
 function downloadPDF(){
 
