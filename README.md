@@ -119,7 +119,7 @@ python3 -m http.server 8000
 - PDF export works best in modern browsers (Chrome, Firefox, Edge, Safari)
 
 ## Author
-Created for Physics I Laboratory - Experiment No. 4
+NAHID@HEXAGONLAB
 
-## License
-Open source - Feel free to use and modify for educational purposes
+## Copyright
+© All rights reserved. Visit [www.hexagonlab.org](https://www.hexagonlab.org)
