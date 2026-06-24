@@ -122,4 +122,4 @@ python3 -m http.server 8000
 NAHID@HEXAGONLAB
 
 ## Copyright
-© All rights reserved. Visit [www.hexagonlab.org](https://www.hexagonlab.org)
+© All rights reserved. Visit [www.hexagonlabo.org](https://www.hexagonlabo.org)
