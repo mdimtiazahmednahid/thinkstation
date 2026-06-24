@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Moment of Inertia of Flywheel</title>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+<script id="MathJax-script" async
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f4f4f4;
+    padding:30px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    background:#fff;
+    padding:40px;
+    border-radius:10px;
+    box-shadow:0 0 15px rgba(0,0,0,.1);
+}
+
+h1,h2,h3{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.formula{
+    margin:20px 0;
+    text-align:center;
+    font-size:18px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th,td{
+    border:1px solid #000;
+    padding:10px;
+    text-align:center;
+}
+
+th{
+    background:#f0f0f0;
+}
+
+input{
+    width:100%;
+    padding:8px;
+    border:1px solid #ccc;
+    border-radius:4px;
+    text-align:center;
+}
+
+input:focus{
+    outline:none;
+    border-color:#2563eb;
+}
+
+input::placeholder{
+    color:#999;
+    font-size:12px;
+}
+
+.buttons{
+    margin-top:20px;
+    text-align:center;
+}
+
+button{
+    padding:12px 25px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.calculate{
+    background:#2563eb;
+    color:white;
+}
+
+.pdf{
+    background:#16a34a;
+    color:white;
+}
+
+.download-btn{
+    background:#16a34a;
+    color:white;
+}
+
+.download-btn:hover{
+    opacity:0.9;
+}
+
+.result-section{
+    margin-top:30px;
+}
+
+.graph-section{
+    margin-top:50px;
+}
+
+.graph-section h2{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.chart-container{
+    width:100%;
+    max-width:960px;
+    height:450px;
+    margin:0 auto 40px;
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:20px;
+    box-shadow:0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.graph-buttons{
+    text-align:center;
+    margin-top:20px;
+}
+
+.discussion{
+    margin-top:30px;
+    border:1px solid #ccc;
+    padding:20px;
+    line-height:1.8;
+}
+
+@media print{
+    button{
+        display:none;
+    }
+
+    body{
+        background:white;
+        padding:0;
+    }
+
+    .container{
+        box-shadow:none;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="container" id="report">
+
+<h1>Physics I Laboratory</h1>
+<h2>Experiment No. 4</h2>
+
+<h3>Determination of the Moment of Inertia of a Flywheel</h3>
+
+<p class="subtitle">
+Moment of inertia calculated using conservation of energy.
+</p>
+
+<div class="formula">
+\[
+\omega = \frac{4\pi N}{t}
+\]
+</div>
+
+<div class="formula">
+\[
+I=
+\frac{NM}{N+n}
+\left(
+\frac{2gh}{\omega^2}
+-r^2
+\right)
+\]
+</div>
+
+<h2>Calculation Table</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Obs.</th>
+<th>Mass M (kg)</th>
+<th>Height h (m)</th>
+<th>Radius r (m)</th>
+<th>n</th>
+<th>N</th>
+<th>Time t (s)</th>
+<th>ω (rad/s)</th>
+<th>Moment of Inertia I (kg.m²)</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>1</td>
+
+<td><input id="m1" placeholder="Enter Mass (kg)"></td>
+<td><input id="h1" placeholder="Enter Height (m)"></td>
+<td><input id="r1" placeholder="Enter Radius (m)"></td>
+<td><input id="n1" placeholder="Enter n"></td>
+<td><input id="N1" placeholder="Enter N"></td>
+<td><input id="t1" placeholder="Enter Time (s)"></td>
+
+<td id="w1">-</td>
+<td id="i1">-</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td><input id="m2" placeholder="Enter Mass (kg)"></td>
+<td><input id="h2" placeholder="Enter Height (m)"></td>
+<td><input id="r2" placeholder="Enter Radius (m)"></td>
+<td><input id="n2" placeholder="Enter n"></td>
+<td><input id="N2" placeholder="Enter N"></td>
+<td><input id="t2" placeholder="Enter Time (s)"></td>
+
+<td id="w2">-</td>
+<td id="i2">-</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td><input id="m3" placeholder="Enter Mass (kg)"></td>
+<td><input id="h3" placeholder="Enter Height (m)"></td>
+<td><input id="r3" placeholder="Enter Radius (m)"></td>
+<td><input id="n3" placeholder="Enter n"></td>
+<td><input id="N3" placeholder="Enter N"></td>
+<td><input id="t3" placeholder="Enter Time (s)"></td>
+
+<td id="w3">-</td>
+<td id="i3">-</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<div class="buttons">
+
+<button class="calculate" onclick="calculate()">
+Calculate
+</button>
+
+<button class="pdf" onclick="downloadPDF()">
+Download PDF
+</button>
+
+</div>
+
+<div class="result-section">
+
+<h2>Result</h2>
+
+<table>
+
+<tr>
+<th>Observation</th>
+<th>Moment of Inertia (kg.m²)</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td id="ri1">-</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td id="ri2">-</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td id="ri3">-</td>
+</tr>
+
+<tr>
+<th>Mean Moment of Inertia</th>
+<th id="meanI">-</th>
+</tr>
+
+</table>
+
+</div>
+
+<div class="graph-section">
+
+<h2>Experimental Graphs</h2>
+
+<div class="chart-container">
+<canvas id="omegaChart"></canvas>
+</div>
+
+<div class="chart-container">
+<canvas id="inertiaChart"></canvas>
+</div>
+
+<div class="graph-buttons">
+
+<button class="download-btn" onclick="downloadGraph('omegaChart','Angular_Velocity_Graph')">
+Download Angular Velocity Graph
+</button>
+
+<button class="download-btn" onclick="downloadGraph('inertiaChart','Moment_of_Inertia_Graph')">
+Download Moment of Inertia Graph
+</button>
+
+</div>
+
+</div>
+
+<div class="discussion">
+
+<h2>Discussion</h2>
+
+<p>
+The moment of inertia of the flywheel was determined using the
+principle of conservation of energy. The values obtained from
+different observations were found to be approximately constant,
+indicating satisfactory agreement with theory. Minor variations
+may have resulted from frictional losses and measurement errors.
+Thus, the moment of inertia of the flywheel was successfully
+determined within experimental limits.
+</p>
+
+</div>
+
+</div>
+
+    <script>
+
+let omegaData = [];
+let inertiaData = [];
+let omegaChart = null;
+let inertiaChart = null;
+
+function calculate(){
+
+const g = 9.81;
+
+let values = [];
+omegaData = [];
+inertiaData = [];
+
+for(let k=1;k<=3;k++){
+
+let M = parseFloat(document.getElementById("m"+k).value);
+let h = parseFloat(document.getElementById("h"+k).value);
+let r = parseFloat(document.getElementById("r"+k).value);
+let n = parseFloat(document.getElementById("n"+k).value);
+let N = parseFloat(document.getElementById("N"+k).value);
+let t = parseFloat(document.getElementById("t"+k).value);
+
+if(
+isNaN(M) ||
+isNaN(h) ||
+isNaN(r) ||
+isNaN(n) ||
+isNaN(N) ||
+isNaN(t)
+){
+continue;
+}
+
+let omega = (4*Math.PI*N)/t;
+
+let I =
+((N*M)/(N+n)) *
+(((2*g*h)/(omega*omega)) - (r*r));
+
+document.getElementById("w"+k).innerHTML =
+omega.toFixed(4);
+
+document.getElementById("i"+k).innerHTML =
+I.toExponential(4);
+
+document.getElementById("ri"+k).innerHTML =
+I.toExponential(4);
+
+omegaData.push(omega);
+inertiaData.push(I);
+values.push(I);
+}
+
+if(values.length){
+
+let mean =
+values.reduce((a,b)=>a+b,0)/values.length;
+
+document.getElementById("meanI").innerHTML =
+mean.toExponential(4);
+}
+
+updateGraphs();
+}
+
+function updateGraphs(){
+
+const observationNumbers = [1, 2, 3];
+
+const omegaCtx = document.getElementById("omegaChart").getContext("2d");
+const inertiaCtx = document.getElementById("inertiaChart").getContext("2d");
+
+if(omegaChart){
+omegaChart.destroy();
+}
+
+if(inertiaChart){
+inertiaChart.destroy();
+}
+
+omegaChart = new Chart(omegaCtx, {
+type: "line",
+data: {
+labels: observationNumbers.slice(0, omegaData.length),
+datasets: [{
+label: "Angular Velocity, ω (rad/s)",
+data: omegaData,
+borderColor: "#16a34a",
+backgroundColor: "rgba(22, 163, 74, 0.18)",
+tension: 0.25,
+fill: true,
+pointRadius: 4,
+pointBackgroundColor: "#16a34a"
+}]
+},
+options: {
+plugins: {
+title: {
+display: true,
+text: "Angular Velocity vs Observation Number",
+font: { size: 18 }
+},
+legend: { display: false }
+},
+scales: {
+x: {
+title: { display: true, text: "Observation Number" }
+},
+y: {
+title: { display: true, text: "Angular Velocity, ω (rad/s)" }
+}
+}
+}
+});
+
+inertiaChart = new Chart(inertiaCtx, {
+type: "line",
+data: {
+labels: observationNumbers.slice(0, inertiaData.length),
+datasets: [{
+label: "Moment of Inertia, I (kg·m²)",
+data: inertiaData,
+borderColor: "#2563eb",
+backgroundColor: "rgba(37, 99, 235, 0.18)",
+tension: 0.25,
+fill: true,
+pointRadius: 4,
+pointBackgroundColor: "#2563eb"
+}]
+},
+options: {
+plugins: {
+title: {
+display: true,
+text: "Moment of Inertia vs Observation Number",
+font: { size: 18 }
+},
+legend: { display: false }
+},
+scales: {
+x: {
+title: { display: true, text: "Observation Number" }
+},
+y: {
+title: { display: true, text: "Moment of Inertia, I (kg·m²)" }
+}
+}
+}
+});
+}
+
+function downloadGraph(canvasId,fileName){
+
+const canvas = document.getElementById(canvasId);
+
+const link = document.createElement("a");
+
+link.download = fileName + ".png";
+
+link.href = canvas.toDataURL("image/png",1.0);
+
+link.click();
+}
+
+function downloadPDF(){
+
+const element =
+document.getElementById("report");
+
+const opt = {
+
+margin:0.3,
+
+filename:
+"Moment_of_Inertia_Flywheel_Report.pdf",
+
+image:{
+type:'jpeg',
+quality:1
+},
+
+html2canvas:{
+scale:2
+},
+
+jsPDF:{
+unit:'in',
+format:'a4',
+orientation:'portrait'
+}
+};
+
+html2pdf()
+.set(opt)
+.from(element)
+.save();
+
+}
+
+</script>
+</body>
+</html>
