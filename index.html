@@ -4,12 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Moment of Inertia of Flywheel</title>
-
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-
-<script id="MathJax-script" async
-src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<title>Experiment No. 4 - Flywheel</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -17,128 +12,94 @@ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
 body{
-    font-family: Arial, Helvetica, sans-serif;
-    background:#f4f4f4;
+    font-family:"Times New Roman",serif;
+    max-width:1200px;
+    margin:auto;
     padding:30px;
+    background:#f5f5f5;
 }
 
 .container{
-    max-width:1200px;
-    margin:auto;
-    background:#fff;
+    background:white;
     padding:40px;
-    border-radius:10px;
-    box-shadow:0 0 15px rgba(0,0,0,.1);
+    box-shadow:0 0 10px rgba(0,0,0,.1);
 }
 
-h1,h2,h3{
+h1{
     text-align:center;
-    margin-bottom:10px;
+    margin-bottom:30px;
 }
 
-.subtitle{
-    text-align:center;
-    margin-bottom:25px;
+h2{
+    margin-top:40px;
 }
 
-.formula{
-    margin:20px 0;
-    text-align:center;
-    font-size:18px;
-}
-
-table{
+.lab-table{
     width:100%;
     border-collapse:collapse;
     margin-top:20px;
+    margin-bottom:30px;
 }
 
-th,td{
+.lab-table caption{
+    font-weight:bold;
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.lab-table th,
+.lab-table td{
     border:1px solid #000;
     padding:10px;
     text-align:center;
+    vertical-align:middle;
 }
 
-th{
-    background:#f0f0f0;
-}
-
-input{
-    width:100%;
-    padding:8px;
-    border:1px solid #ccc;
-    border-radius:4px;
+.lab-table input{
+    width:95%;
+    border:none;
     text-align:center;
-}
-
-input:focus{
     outline:none;
-    border-color:#2563eb;
+    font-size:14px;
+    background:transparent;
 }
 
-input::placeholder{
-    color:#999;
-    font-size:12px;
-}
-
-.buttons{
-    margin-top:20px;
+.footer-box{
+    border:1px solid #000;
+    padding:15px;
     text-align:center;
+    margin-top:-30px;
+}
+
+.result{
+    font-weight:bold;
+    color:#0d6efd;
 }
 
 button{
-    padding:12px 25px;
-    margin:5px;
+    padding:12px 20px;
     border:none;
-    border-radius:5px;
+    background:#0d6efd;
+    color:white;
     cursor:pointer;
-    font-size:14px;
+    border-radius:5px;
+    margin-bottom:25px;
 }
 
-.calculate{
-    background:#2563eb;
-    color:white;
-}
-
-.pdf{
-    background:#16a34a;
-    color:white;
-}
-
-.download-btn{
-    background:#16a34a;
-    color:white;
-}
-
-.download-btn:hover{
-    opacity:0.9;
-}
-
-.result-section{
-    margin-top:30px;
+button:hover{
+    background:#084dbd;
 }
 
 .graph-section{
     margin-top:50px;
-}
-
-.graph-section h2{
-    text-align:center;
-    margin-bottom:25px;
+    page-break-before:always;
 }
 
 .chart-container{
     width:100%;
-    max-width:960px;
     height:450px;
-    margin:0 auto 40px;
+    margin:40px 0;
     background:#fff;
     border:1px solid #ddd;
     border-radius:8px;
@@ -148,14 +109,21 @@ button{
 
 .graph-buttons{
     text-align:center;
-    margin-top:20px;
+    margin:20px 0;
 }
 
-.discussion{
-    margin-top:30px;
-    border:1px solid #ccc;
-    padding:20px;
-    line-height:1.8;
+.download-btn{
+    padding:12px 20px;
+    border:none;
+    background:#16a34a;
+    color:white;
+    cursor:pointer;
+    border-radius:5px;
+    margin:5px;
+}
+
+.download-btn:hover{
+    opacity:0.9;
 }
 
 footer{
@@ -168,7 +136,7 @@ footer{
 }
 
 footer a{
-    color:#2563eb;
+    color:#0d6efd;
     text-decoration:none;
 }
 
@@ -187,7 +155,6 @@ footer a:hover{
 
     body{
         background:white;
-        padding:0;
     }
 
     .container{
@@ -201,144 +168,261 @@ footer a:hover{
 
 <div class="container" id="report">
 
-<h1>Physics I Laboratory</h1>
-<h2>Experiment No. 4</h2>
+<h1>
+Experiment No. 4<br>
+Moment of Inertia of a Flywheel
+</h1>
 
-<h3>Determination of the Moment of Inertia of a Flywheel</h3>
+<button onclick="downloadPDF()">
+Download PDF
+</button>
 
-<p class="subtitle">
-Moment of inertia calculated using conservation of energy.
-</p>
+<h2>4.8 Experimental Data</h2>
 
-<div class="formula">
-\[
-\omega = \frac{4\pi N}{t}
-\]
-</div>
+<table class="lab-table">
 
-<div class="formula">
-\[
-I=
-\frac{NM}{N+n}
-\left(
-\frac{2gh}{\omega^2}
--r^2
-\right)
-\]
-</div>
-
-<h2>Calculation Table</h2>
-
-<table>
-
-<thead>
+<caption>
+Table 4.1: Readings for n, N and t for different M and h
+</caption>
 
 <tr>
-<th>Obs.</th>
-<th>Mass M (kg)</th>
-<th>Height h (m)</th>
-<th>Radius r (m)</th>
-<th>n</th>
-<th>N</th>
-<th>Time t (s)</th>
-<th>ω (rad/s)</th>
-<th>Moment of Inertia I (kg.m²)</th>
+<th rowspan="2">Obs.<br>No.</th>
+
+<th rowspan="2">
+Mass<br>
+Suspended<br>
+M<br>
+(kg)
+</th>
+
+<th rowspan="2">
+Height above<br>
+the ground<br>
+h<br>
+(m)
+</th>
+
+<th colspan="2">
+No of revolutions
+</th>
+
+<th rowspan="2">
+Time for N<br>
+rotations<br>
+t<br>
+(s)
+</th>
 </tr>
 
-</thead>
-
-<tbody>
+<tr>
+<th>n</th>
+<th>N</th>
+</tr>
 
 <tr>
 <td>1</td>
-
-<td><input id="m1" placeholder="Enter Mass (kg)"></td>
-<td><input id="h1" placeholder="Enter Height (m)"></td>
-<td><input id="r1" placeholder="Enter Radius (m)"></td>
+<td><input id="m1" placeholder="Enter Mass"></td>
+<td><input id="h1" placeholder="Enter Height"></td>
 <td><input id="n1" placeholder="Enter n"></td>
 <td><input id="N1" placeholder="Enter N"></td>
-<td><input id="t1" placeholder="Enter Time (s)"></td>
+<td><input id="t1" placeholder="Enter Time"></td>
+</tr>
 
+<tr>
+<td>2</td>
+<td><input id="m2" placeholder="Enter Mass"></td>
+<td><input id="h2" placeholder="Enter Height"></td>
+<td><input id="n2" placeholder="Enter n"></td>
+<td><input id="N2" placeholder="Enter N"></td>
+<td><input id="t2" placeholder="Enter Time"></td>
+</tr>
+
+<tr>
+<td>3</td>
+<td><input id="m3" placeholder="Enter Mass"></td>
+<td><input id="h3" placeholder="Enter Height"></td>
+<td><input id="n3" placeholder="Enter n"></td>
+<td><input id="N3" placeholder="Enter N"></td>
+<td><input id="t3" placeholder="Enter Time"></td>
+</tr>
+
+</table>
+
+<h2>Table 4.2: Reading for the Radius of Axel</h2>
+
+<table class="lab-table">
+
+<tr>
+
+<th>
+Obs.<br>
+No.
+</th>
+
+<th>
+M.S.R.<br>
+x<br>
+(cm)
+</th>
+
+<th>
+V.S.D.<br>
+a
+</th>
+
+<th>
+V.S.R.<br>
+y=a×c<br>
+(cm)
+</th>
+
+<th>
+Diameter<br>
+d=x+y<br>
+(cm)
+</th>
+
+<th rowspan="4">
+Mean<br>
+Diameter<br>
+d<br>
+(cm)
+</th>
+
+<th rowspan="4">
+Mean<br>
+Radius<br>
+r<br>
+(cm)
+</th>
+
+</tr>
+
+<tr>
+
+<td>1</td>
+
+<td>
+<input class="x">
+</td>
+
+<td>
+<input class="a">
+</td>
+
+<td>
+<input class="y">
+</td>
+
+<td>
+<input class="diameter" readonly>
+</td>
+
+</tr>
+
+<tr>
+
+<td>2</td>
+
+<td>
+<input class="x">
+</td>
+
+<td>
+<input class="a">
+</td>
+
+<td>
+<input class="y">
+</td>
+
+<td>
+<input class="diameter" readonly>
+</td>
+
+</tr>
+
+<tr>
+
+<td>3</td>
+
+<td>
+<input class="x">
+</td>
+
+<td>
+<input class="a">
+</td>
+
+<td>
+<input class="y">
+</td>
+
+<td>
+<input class="diameter" readonly>
+</td>
+
+</tr>
+
+</table>
+
+<div class="footer-box">
+
+Mean Diameter =
+<span class="result" id="meanDiameter">0</span>
+cm
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+Mean Radius =
+<span class="result" id="meanRadius">0</span>
+cm
+
+</div>
+
+<h2>Calculations & Results</h2>
+
+<button onclick="calculate()">
+Calculate
+</button>
+
+<table class="lab-table">
+
+<caption>
+Table 4.3: Calculated Values for Angular Velocity and Moment of Inertia
+</caption>
+
+<tr>
+<th>Obs. No.</th>
+<th>ω (rad/s)</th>
+<th>Moment of Inertia I (kg·m²)</th>
+</tr>
+
+<tr>
+<td>1</td>
 <td id="w1">-</td>
 <td id="i1">-</td>
 </tr>
 
 <tr>
 <td>2</td>
-
-<td><input id="m2" placeholder="Enter Mass (kg)"></td>
-<td><input id="h2" placeholder="Enter Height (m)"></td>
-<td><input id="r2" placeholder="Enter Radius (m)"></td>
-<td><input id="n2" placeholder="Enter n"></td>
-<td><input id="N2" placeholder="Enter N"></td>
-<td><input id="t2" placeholder="Enter Time (s)"></td>
-
 <td id="w2">-</td>
 <td id="i2">-</td>
 </tr>
 
 <tr>
 <td>3</td>
-
-<td><input id="m3" placeholder="Enter Mass (kg)"></td>
-<td><input id="h3" placeholder="Enter Height (m)"></td>
-<td><input id="r3" placeholder="Enter Radius (m)"></td>
-<td><input id="n3" placeholder="Enter n"></td>
-<td><input id="N3" placeholder="Enter N"></td>
-<td><input id="t3" placeholder="Enter Time (s)"></td>
-
 <td id="w3">-</td>
 <td id="i3">-</td>
 </tr>
 
-</tbody>
-
 </table>
 
-<div class="buttons">
+<div class="footer-box">
 
-<button class="calculate" onclick="calculate()">
-Calculate
-</button>
-
-<button class="pdf" onclick="downloadPDF()">
-Download PDF
-</button>
-
-</div>
-
-<div class="result-section">
-
-<h2>Result</h2>
-
-<table>
-
-<tr>
-<th>Observation</th>
-<th>Moment of Inertia (kg.m²)</th>
-</tr>
-
-<tr>
-<td>1</td>
-<td id="ri1">-</td>
-</tr>
-
-<tr>
-<td>2</td>
-<td id="ri2">-</td>
-</tr>
-
-<tr>
-<td>3</td>
-<td id="ri3">-</td>
-</tr>
-
-<tr>
-<th>Mean Moment of Inertia</th>
-<th id="meanI">-</th>
-</tr>
-
-</table>
+Mean Moment of Inertia =
+<span class="result" id="meanI">0</span>
+kg·m²
 
 </div>
 
@@ -368,36 +452,62 @@ Download Moment of Inertia Graph
 
 </div>
 
-<div class="discussion">
-
-<h2>Discussion</h2>
-
-<p>
-The moment of inertia of the flywheel was determined using the
-principle of conservation of energy. The values obtained from
-different observations were found to be approximately constant,
-indicating satisfactory agreement with theory. Minor variations
-may have resulted from frictional losses and measurement errors.
-Thus, the moment of inertia of the flywheel was successfully
-determined within experimental limits.
-</p>
-
 </div>
 
 <footer>
 <p>© All rights reserved. NAHID@HEXAGONLAB | <a href="https://www.hexagonlabo.org" target="_blank">www.hexagonlabo.org</a></p>
 </footer>
 
-    <script>
+<script>
 
 let omegaData = [];
 let inertiaData = [];
 let omegaChart = null;
 let inertiaChart = null;
 
+function calculateRadius(){
+
+let x=document.querySelectorAll(".x");
+let y=document.querySelectorAll(".y");
+let d=document.querySelectorAll(".diameter");
+
+let total=0;
+let count=0;
+
+for(let i=0;i<3;i++){
+
+let xv=parseFloat(x[i].value)||0;
+let yv=parseFloat(y[i].value)||0;
+
+let dia=xv+yv;
+
+d[i].value=dia?dia.toFixed(3):"";
+
+if(dia>0){
+total+=dia;
+count++;
+}
+}
+
+let mean=count?total/count:0;
+
+document.getElementById("meanDiameter")
+.innerHTML=mean.toFixed(3);
+
+document.getElementById("meanRadius")
+.innerHTML=(mean/2).toFixed(3);
+
+}
+
+document.querySelectorAll(".x,.y")
+.forEach(el=>{
+el.addEventListener("input",calculateRadius);
+});
+
 function calculate(){
 
 const g = 9.81;
+const r = (parseFloat(document.getElementById("meanRadius").innerHTML) || 0) / 100;
 
 let values = [];
 omegaData = [];
@@ -407,36 +517,20 @@ for(let k=1;k<=3;k++){
 
 let M = parseFloat(document.getElementById("m"+k).value);
 let h = parseFloat(document.getElementById("h"+k).value);
-let r = parseFloat(document.getElementById("r"+k).value);
 let n = parseFloat(document.getElementById("n"+k).value);
 let N = parseFloat(document.getElementById("N"+k).value);
 let t = parseFloat(document.getElementById("t"+k).value);
 
-if(
-isNaN(M) ||
-isNaN(h) ||
-isNaN(r) ||
-isNaN(n) ||
-isNaN(N) ||
-isNaN(t)
-){
+if(isNaN(M) || isNaN(h) || isNaN(n) || isNaN(N) || isNaN(t)){
 continue;
 }
 
 let omega = (4*Math.PI*N)/t;
 
-let I =
-((N*M)/(N+n)) *
-(((2*g*h)/(omega*omega)) - (r*r));
+let I = ((N*M)/(N+n)) * (((2*g*h)/(omega*omega)) - (r*r));
 
-document.getElementById("w"+k).innerHTML =
-omega.toFixed(4);
-
-document.getElementById("i"+k).innerHTML =
-I.toExponential(4);
-
-document.getElementById("ri"+k).innerHTML =
-I.toExponential(4);
+document.getElementById("w"+k).innerHTML = omega.toFixed(4);
+document.getElementById("i"+k).innerHTML = I.toExponential(4);
 
 omegaData.push(omega);
 inertiaData.push(I);
@@ -444,12 +538,8 @@ values.push(I);
 }
 
 if(values.length){
-
-let mean =
-values.reduce((a,b)=>a+b,0)/values.length;
-
-document.getElementById("meanI").innerHTML =
-mean.toExponential(4);
+let mean = values.reduce((a,b)=>a+b,0)/values.length;
+document.getElementById("meanI").innerHTML = mean.toExponential(4);
 }
 
 updateGraphs();
@@ -477,12 +567,12 @@ labels: observationNumbers.slice(0, omegaData.length),
 datasets: [{
 label: "Angular Velocity, ω (rad/s)",
 data: omegaData,
-borderColor: "#16a34a",
-backgroundColor: "rgba(22, 163, 74, 0.18)",
+borderColor: "#0d6efd",
+backgroundColor: "rgba(13, 110, 253, 0.18)",
 tension: 0.25,
 fill: true,
 pointRadius: 4,
-pointBackgroundColor: "#16a34a"
+pointBackgroundColor: "#0d6efd"
 }]
 },
 options: {
@@ -512,12 +602,12 @@ labels: observationNumbers.slice(0, inertiaData.length),
 datasets: [{
 label: "Moment of Inertia, I (kg·m²)",
 data: inertiaData,
-borderColor: "#2563eb",
-backgroundColor: "rgba(37, 99, 235, 0.18)",
+borderColor: "#16a34a",
+backgroundColor: "rgba(22, 163, 74, 0.18)",
 tension: 0.25,
 fill: true,
 pointRadius: 4,
-pointBackgroundColor: "#2563eb"
+pointBackgroundColor: "#16a34a"
 }]
 },
 options: {
@@ -544,51 +634,34 @@ title: { display: true, text: "Moment of Inertia, I (kg·m²)" }
 function downloadGraph(canvasId,fileName){
 
 const canvas = document.getElementById(canvasId);
-
 const link = document.createElement("a");
-
 link.download = fileName + ".png";
-
 link.href = canvas.toDataURL("image/png",1.0);
-
 link.click();
 }
 
 function downloadPDF(){
 
-const element =
-document.getElementById("report");
+let element=document.getElementById("report");
 
-const opt = {
-
-margin:0.3,
-
-filename:
-"Moment_of_Inertia_Flywheel_Report.pdf",
-
-image:{
-type:'jpeg',
-quality:1
-},
-
-html2canvas:{
-scale:2
-},
-
+html2pdf()
+.set({
+margin:0.5,
+filename:'Flywheel_Lab_Report.pdf',
+image:{type:'jpeg',quality:1},
+html2canvas:{scale:2},
 jsPDF:{
 unit:'in',
 format:'a4',
 orientation:'portrait'
 }
-};
-
-html2pdf()
-.set(opt)
+})
 .from(element)
 .save();
 
 }
 
 </script>
+
 </body>
 </html>
