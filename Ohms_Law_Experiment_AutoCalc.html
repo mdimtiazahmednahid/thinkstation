@@ -135,18 +135,18 @@
         <th>Current I (A)</th>
         <th>Voltage V (V)</th>
       </tr>
-      <tr><td rowspan="6">\(R_s\) (Series)</td><td>0.05</td><td><input id="v3_1" type="number" step="any"></td></tr>
-      <tr><td>0.10</td><td><input id="v3_2" type="number" step="any"></td></tr>
-      <tr><td>0.15</td><td><input id="v3_3" type="number" step="any"></td></tr>
-      <tr><td>0.20</td><td><input id="v3_4" type="number" step="any"></td></tr>
-      <tr><td>0.25</td><td><input id="v3_5" type="number" step="any"></td></tr>
-      <tr><td>0.30</td><td><input id="v3_6" type="number" step="any"></td></tr>
-      <tr><td rowspan="6">\(R_p\) (Parallel)</td><td>0.05</td><td><input id="v4_1" type="number" step="any"></td></tr>
-      <tr><td>0.10</td><td><input id="v4_2" type="number" step="any"></td></tr>
-      <tr><td>0.15</td><td><input id="v4_3" type="number" step="any"></td></tr>
-      <tr><td>0.20</td><td><input id="v4_4" type="number" step="any"></td></tr>
-      <tr><td>0.25</td><td><input id="v4_5" type="number" step="any"></td></tr>
-      <tr><td>0.30</td><td><input id="v4_6" type="number" step="any"></td></tr>
+      <tr><td rowspan="6">\(R_s\) (Series)</td><td>0.1</td><td><input id="v3_1" type="number" step="any"></td></tr>
+      <tr><td>0.2</td><td><input id="v3_2" type="number" step="any"></td></tr>
+      <tr><td>0.3</td><td><input id="v3_3" type="number" step="any"></td></tr>
+      <tr><td>0.4</td><td><input id="v3_4" type="number" step="any"></td></tr>
+      <tr><td>0.5</td><td><input id="v3_5" type="number" step="any"></td></tr>
+      <tr><td>0.6</td><td><input id="v3_6" type="number" step="any"></td></tr>
+      <tr><td rowspan="6">\(R_p\) (Parallel)</td><td>0.1</td><td><input id="v4_1" type="number" step="any"></td></tr>
+      <tr><td>0.2</td><td><input id="v4_2" type="number" step="any"></td></tr>
+      <tr><td>0.3</td><td><input id="v4_3" type="number" step="any"></td></tr>
+      <tr><td>0.4</td><td><input id="v4_4" type="number" step="any"></td></tr>
+      <tr><td>0.5</td><td><input id="v4_5" type="number" step="any"></td></tr>
+      <tr><td>0.6</td><td><input id="v4_6" type="number" step="any"></td></tr>
     </table>
   </div>
 
@@ -229,7 +229,7 @@
 
   <script>
     const currents1 = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6];
-    const currents2 = [0.05, 0.10, 0.15, 0.20, 0.25, 0.30];
+    const currents2 = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6];
 
     function num(id) {
       const value = parseFloat(document.getElementById(id).value);
@@ -455,7 +455,7 @@
       }
 
       drawChart("chart1", pts1, pts2, res1, res2, "V vs I (R1)", "V vs I (R2)", "#1d4ed8", "#b91c1c", 0.65);
-      drawChart("chart2", pts3, pts4, res3, res4, "V vs I (Rs)", "V vs I (Rp)", "#047857", "#6d28d9", 0.35);
+      drawChart("chart2", pts3, pts4, res3, res4, "V vs I (Rs)", "V vs I (Rp)", "#047857", "#6d28d9", 0.65);
 
       writeReports(R1, R2, Rs_exp, Rs_calc, Rp_exp, Rp_calc, diff_rs, diff_rp);
     }
