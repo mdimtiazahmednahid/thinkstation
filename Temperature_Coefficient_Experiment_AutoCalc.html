@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Physics Lab Experiment #6 - Temperature Coefficient</title>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    body {
+      font-family: "Times New Roman", serif;
+      max-width: 980px;
+      margin: auto;
+      padding: 24px;
+      color: #111;
+      font-size: 18px;
+      line-height: 1.28
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0 0 12px
+    }
+
+    h1 {
+      font-size: 24px;
+      text-align: left
+    }
+
+    h2 {
+      font-size: 22px;
+      text-align: left
+    }
+
+    h3 {
+      font-size: 20px;
+      text-align: left
+    }
+
+    p {
+      margin: 8px 0
+    }
+
+    ul,
+    ol {
+      margin-top: 6px
+    }
+
+    li {
+      margin: 5px 0
+    }
+
+    .section {
+      margin-top: 28px
+    }
+
+    .center {
+      text-align: center
+    }
+
+    .caption {
+      text-align: center;
+      margin: 12px 0 6px;
+      font-size: 19px
+    }
+
+    .equation {
+      text-align: center;
+      font-size: 21px;
+      margin: 12px 0
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 30px;
+      table-layout: fixed
+    }
+
+    th,
+    td {
+      border: 1px solid #000;
+      text-align: center;
+      vertical-align: middle;
+      padding: 8px 6px;
+      font-weight: normal
+    }
+
+    th {
+      line-height: 1.15;
+      background: #fafafa;
+    }
+
+    input {
+      box-sizing: border-box;
+      width: 100%;
+      border: 0;
+      background: transparent;
+      text-align: center;
+      font-family: inherit;
+      font-size: 16px;
+      padding: 5px 2px;
+      border-bottom: 1px dashed #ccc;
+    }
+
+    input:focus {
+      outline: none;
+      border-bottom: 1px solid #333;
+      background: #f0f8ff;
+    }
+
+    input::placeholder {
+      color: #777;
+      opacity: 1
+    }
+
+    input[readonly] {
+      color: #000;
+      border-bottom: none;
+    }
+
+    .formula-line {
+      font-size: 21px;
+      margin: 18px 0
+    }
+
+    .line-value {
+      display: inline-block;
+      min-width: 145px;
+      border-bottom: 1px solid #000;
+      text-align: center;
+      min-height: 22px
+    }
+
+    .wide-line {
+      display: inline-block;
+      min-width: 260px;
+      border-bottom: 1px solid #000;
+      text-align: center;
+      min-height: 22px
+    }
+
+    .chart-box {
+      border: 1px solid #000;
+      padding: 10px;
+      margin: 10px 0 28px
+    }
+
+    .chart-title {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 8px
+    }
+
+    canvas {
+      width: 100%;
+      height: 360px;
+      display: block
+    }
+
+    .auto-report-box {
+      min-height: 86px;
+      border: 1px solid #000;
+      padding: 12px;
+      margin: 8px 0 18px;
+      text-align: justify;
+      white-space: pre-wrap
+    }
+
+    .footer {
+      margin: 34px 0 10px;
+      padding-top: 12px;
+      border-top: 1px solid #000;
+      text-align: center;
+      font-size: 15px;
+      font-family: Arial, sans-serif;
+      letter-spacing: .2px
+    }
+
+    button {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      padding: 10px 16px;
+      margin: 12px 0 30px;
+      cursor: pointer;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background: #555;
+    }
+
+    @media print {
+      button {
+        display: none
+      }
+
+      body {
+        max-width: none;
+        padding: 10px;
+        font-size: 16px
+      }
+
+      input::placeholder {
+        color: transparent
+      }
+
+      input {
+        border-bottom: none;
+      }
+
+      canvas {
+        height: 280px
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Experiment No. 6:</h1>
+  <p><b>To determine the temperature coefficient of resistance of the material of a wire.</b></p>
+
+  <div class="section">
+    <h2>6.1 Objectives</h2>
+    <p>To find the temperature coefficient of resistance of a given wire by applying Ohm's Law.</p>
+  </div>
+
+  <div class="section">
+    <h2>6.2 Prelab</h2>
+    <p>Students must have a clear idea about the objectives and related theory of the experiment. Lab Demonstrator will
+      confirm that the students have submitted their previous group lab reports in printed form before giving them the
+      attendance. The marks of performance depend greatly on this part.</p>
+  </div>
+
+  <div class="section">
+    <h2>6.3 Outcomes:</h2>
+    <p>After completing this lab work, students will be able to answer the following questions:</p>
+    <ul>
+      <li>What do you mean by temperature coefficient of resistance?</li>
+      <li>Application of Ohm's law in determining unknown resistance?</li>
+      <li>How does resistance change with temperature? Is there any positive or negative temperature coefficient of
+        resistance?</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>6.4 Timing and Length of Investigation (Total 2 Hours 20 Minutes):</h2>
+    <ul>
+      <li><b>Lab Preparation (10 minutes):</b> Students will sit for the lab class with preparations and class
+        attendance will be taken.</li>
+      <li><b>Lecture on Theory (30 minutes):</b> Teacher will clarify the objective and theory of the experiment.</li>
+      <li><b>Lecture on Procedure (15 minutes):</b> Demonstrator will make the students understand the procedure of the
+        experiment.</li>
+      <li><b>Experimental Work (60 minutes):</b> Design of experiment: 10 minutes; Data collection: 30 minutes; Data
+        analysis, drawing graphs, and completing the result part: 20 minutes.</li>
+      <li><b>Post Lab Discussion (10 minutes):</b> Teacher will summarize the total lab work and have a discussion with
+        the students related to the questions given in the outcomes part.</li>
+      <li><b>Report Preparation &amp; Submission (10 minutes):</b> After completing the lab reports, students will
+        submit their lab reports in the next class as groups.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>6.5 Theory</h2>
+    <p>The temperature coefficient of resistance is the property of the material of a substance. It is the measure of
+      change in electrical resistance of a substance per degree temperature change.</p>
+    <p>For a conductor, the resistance increases linearly and for a semiconductor, the resistance decreases
+      exponentially with temperature.</p>
+    <p>For a conductor, the resistance increases with an increase in temperature. If \(R_1\) is the resistance of a
+      conductor at temperature \(\theta_1\) and at a higher temperature \(\theta_2\) the resistance rises to \(R_2\),
+      then we can write:</p>
+    <div class="equation">\( R_2 = R_1 [1 + \alpha(\theta_2 - \theta_1)] \) &nbsp;&nbsp;&nbsp; (1)</div>
+    <p>where \(\alpha\) is the temperature coefficient of the material of the conductor.<br>Rearranging Eq. 1, we get:
+    </p>
+    <div class="equation">\( R_2 = R_1 + \alpha R_1 (\theta_2 - \theta_1) \)</div>
+    <div class="equation">\( \alpha R_1 (\theta_2 - \theta_1) = R_2 - R_1 \)</div>
+    <div class="equation">\( \alpha = \dfrac{R_2 - R_1}{R_1(\theta_2 - \theta_1)} = \dfrac{\Delta R}{R_1 \Delta\theta}
+      \) &nbsp;&nbsp;&nbsp; (2)</div>
+    <p>where \(\Delta R (= R_2 - R_1)\) is the change in resistance due to the change in temperature \(\Delta\theta (=
+      \theta_2 - \theta_1)\).</p>
+    <p>In Eq. (2) if we put \(R_1 = 1 \Omega\) and \(\Delta\theta = 1 ^\circ C\) we get \(\alpha = \Delta R\), thus we
+      define the temperature coefficient of resistance of a substance as the change in resistance per unit resistance
+      (per ohm) for unit change in temperature (per \(^\circ C\)). Also, we find the unit of \(\alpha\) as per \(^\circ
+      C^{-1}\).</p>
+    <p>For a conductor, if we know the resistances \(R_1\) at a temperature \(\theta_1\) and \(R_2\) at a higher
+      temperature \(\theta_2\), then we can calculate the temperature coefficient of resistance of its material by using
+      Eq. 2. The unknown resistance can be determined using a voltmeter and an ammeter employing Ohm’s law.</p>
+    <p>Ohm's law states that at a constant temperature, the current through a conductor between two points is directly
+      proportional to the voltage across those two points. Introducing the constant of proportionality, the resistance,
+      one arrives at the usual mathematical equation that describes this relationship:</p>
+    <div class="equation">\( V = IR \)</div>
+    <p>where \(I\) is the current and \(V\) is the potential difference across the resistance \(R\).</p>
+  </div>
+
+  <div class="section">
+    <h2>6.6 Equipment</h2>
+    <p>Power supply, voltmeter, ammeter, coil of conducting wire, commutator, thermometer, Rheostat (variable resistor),
+      Beaker, water, electric heater, etc.</p>
+  </div>
+
+  <div class="section">
+    <h2>6.8 Procedure</h2>
+    <h3>6.8.1 Set up and Data collection.</h3>
+    <ol>
+      <li>Set up the apparatus as the circuit diagram shows in figure 6.3.</li>
+      <li>Fill the beaker so that the resistance coil is immersed in the water.</li>
+      <li>Using both the voltage control knob of the DC source and the rheostat \(R_h\) choose a current of 0.1 A.
+        Switch off the circuit immediately and wait for at least 2 minutes. Note down the temperature \(\theta_1'\)</li>
+      <li>Switch on the circuit and note down the current from the ammeter and voltage from the voltmeter. Switch off
+        the circuit and wait for 1 minute.</li>
+      <li>Now adjust the current to 0.2 A following step 3 and note down both ammeter and voltmeter readings as before
+        the temperature. Switch off the circuit and wait for 1 minute.</li>
+      <li>Repeat previous step for 0.3A, 0.4A, &amp; 0.5A current.</li>
+      <li>Note down the temperature \(\theta_1''\) of the system again. Mean of \(\theta_1'\) and \(\theta_1''\) is the
+        initial temperature of the coil.</li>
+      <li>Pour hot water in the Beaker to raise the temperature. Note the high temperature, \(\theta_2'\) from the
+        thermometer.</li>
+      <li>Repeat steps 3 to 6 and note down the temperature of the beaker from the thermometer \(\theta_2''\) again.
+        Average of \(\theta_2'\) and \(\theta_2''\) gives the high temperature of the beaker.</li>
+    </ol>
+
+    <h3>6.8.2 Data analysis</h3>
+    <ol>
+      <li>Use EXCEL to plot V versus I graphs on the same graph for room temperature (\(\theta_1\)) and high temperature
+        (\(\theta_2\)) data.</li>
+      <li>Find the best fit lines (trend line in Excel) and determine the slope of the best fit lines from the
+        respective trendline equations.</li>
+      <li>The slope of the V vs I graphs gives the resistance values \(R_1\) and \(R_2\) respectively. Calculate the
+        value of \(\alpha\) using equation 2.</li>
+      <li>Compare your result with the reference value of \(\alpha\) for copper material.</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>6.9 Experimental Data</h2>
+    <div class="caption">Table 6.1: Voltage current records for \(R_1\) and \(R_2\)</div>
+    <table>
+      <tr>
+        <th style="width:25%">Temperature <br> \(^\circ C\)</th>
+        <th style="width:25%">Resistance <br> \(\Omega\)</th>
+        <th style="width:25%">Current <br> \(I\) (A)</th>
+        <th style="width:25%">Voltage <br> \(V\) (V)</th>
+      </tr>
+      <!-- Temp 1 Section -->
+      <tr>
+        <td>\(\theta_1'\) <input id="t1_1" type="number" step="any" style="width:70px"></td>
+        <td rowspan="5" style="border-bottom: 2px solid #000;">Slope of<br>graph 1<br>\(R_1\)<br><br><span id="r1_disp"
+            style="font-weight:bold;color:#111; font-size:22px;">-</span></td>
+        <td>0.1</td>
+        <td><input id="v1_1" type="number" step="any"></td>
+      </tr>
+      <tr>
+        <td>\(\theta_1''\) <input id="t1_2" type="number" step="any" style="width:70px"></td>
+        <td>0.2</td>
+        <td><input id="v1_2" type="number" step="any"></td>
+      </tr>
+      <tr>
+        <td rowspan="3" style="border-bottom: 2px solid #000;">Mean \(\theta_1\) <br><br><span id="mean_t1"
+            style="font-weight:bold; font-size:22px;">-</span></td>
+        <td>0.3</td>
+        <td><input id="v1_3" type="number" step="any"></td>
+      </tr>
+      <tr>
+        <td>0.4</td>
+        <td><input id="v1_4" type="number" step="any"></td>
+      </tr>
+      <tr>
+        <td style="border-bottom: 2px solid #000;">0.5</td>
+        <td style="border-bottom: 2px solid #000;"><input id="v1_5" type="number" step="any"></td>
+      </tr>
+
+
+      <!-- Temp 2 Section -->
+      <tr>
+        <td>\(\theta_2'\) <input id="t2_1" type="number" step="any" style="width:70px"></td>
+        <td rowspan="5">Slope of<br>graph 2<br>\(R_2\)<br><br><span id="r2_disp"
+            style="font-weight:bold;color:#111; font-size:22px;">-</span></td>
+        <td>0.1</td>
+        <td><input id="v2_1" type="number" step="any"></td>
+      </tr>
+      <tr>
+        <td>\(\theta_2''\) <input id="t2_2" type="number" step="any" style="width:70px"></td>
+        <td>0.2</td>
+        <td><input id="v2_2" type="number" step="any"></td>
+      </tr>
+      <tr>
+        <td rowspan="3">Mean \(\theta_2\) <br><br><span id="mean_t2" style="font-weight:bold; font-size:22px;">-</span>
+        </td>
+        <td>0.3</td>
+        <td><input id="v2_3" type="number" step="any"></td>
+      </tr>
+      <tr>
+        <td>0.4</td>
+        <td><input id="v2_4" type="number" step="any"></td>
+      </tr>
+      <tr>
+        <td>0.5</td>
+        <td><input id="v2_5" type="number" step="any"></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Graph:</h2>
+    <div class="chart-box">
+      <div class="chart-title">V vs I with Linear Regression Lines for \(\theta_1\) and \(\theta_2\)</div>
+      <canvas id="regressionChart"></canvas>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>6.10 Calculation</h2>
+    <div class="formula-line">Temperature coefficient of resistance, \( \alpha = \dfrac{R_2 - R_1}{R_1(\theta_2 -
+      \theta_1)} \)</div>
+    <div class="formula-line">
+      <i>&alpha;</i> =
+      <span style="display:inline-block; vertical-align:middle; text-align:center;">
+        <span style="border-bottom: 1px solid #111; display:block; padding-bottom: 2px;">
+          <span id="calc_r2" style="font-weight:bold">-</span> &minus; <span id="calc_r1"
+            style="font-weight:bold">-</span>
+        </span>
+        <span style="display:block; padding-top: 2px;">
+          <span id="calc_r1_b" style="font-weight:bold">-</span> &times; (<span id="calc_t2"
+            style="font-weight:bold">-</span> &minus; <span id="calc_t1" style="font-weight:bold">-</span>)
+        </span>
+      </span>
+      = <span id="calc_alpha" class="line-value"></span> &deg;C<sup>-1</sup>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>6.11 Result</h2>
+    <table>
+      <tr>
+        <th>Temperature (\(^\circ C\))</th>
+        <th>Resistance (ohm)</th>
+        <th>Temperature coefficient of resistance (\(^\circ C^{-1}\))</th>
+      </tr>
+      <tr>
+        <td>\(\theta_1 = \) <span id="res_t1">-</span></td>
+        <td>\(R_1 = \) <span id="res_r1">-</span></td>
+        <td rowspan="2" style="vertical-align: middle;">
+          <div>\(\alpha = \) <b><span id="res_alpha">-</span></b></div>
+          <div id="res_diff_container" style="display: none; margin-top: 14px;">
+            Reference for Copper &approx; 0.00393<br><br>
+            Difference = <b><span id="res_error"></span>%</b>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>\(\theta_2 = \) <span id="res_t2">-</span></td>
+        <td>\(R_2 = \) <span id="res_r2">-</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>6.12 Discussion</h2>
+    <div id="discussion" class="auto-report-box"></div>
+  </div>
+
+  <div class="section">
+    <h2>6.13 Resources</h2>
+    <p>For further understanding, students may go through the following resources:</p>
+    <ul>
+      <li>Fundamentals of Physics (10th Edition): Resistance and resistivity (Chapter 26, page 755)</li>
+      <li><b>Video Links:</b> Temperature coefficient: <a
+          href="https://www.youtube.com/watch?v=TgmOfi2rn0s">https://www.youtube.com/watch?v=TgmOfi2rn0s</a></li>
+    </ul>
+  </div>
+
+  <div style="text-align:center;">
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+  <footer class="footer">All rights reserved NAHID | hexagonlabo.org</footer>
+
+  <script>
+    const currents = [0.1, 0.2, 0.3, 0.4, 0.5];
+    const referenceAlpha = 0.00393;
+
+    function num(id) {
+      const value = parseFloat(document.getElementById(id).value);
+      return Number.isFinite(value) ? value : null;
+    }
+
+    function setText(id, value, digits = 4) {
+      document.getElementById(id).textContent = Number.isFinite(value) ? value.toFixed(digits) : "-";
+    }
+
+    function calculateSlope(xValues, yValues) {
+      const n = xValues.length;
+      if (n < 2) return null;
+      let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+      for (let i = 0; i < n; i++) {
+        sumX += xValues[i];
+        sumY += yValues[i];
+        sumXY += xValues[i] * yValues[i];
+        sumX2 += xValues[i] * xValues[i];
+      }
+      const denominator = sumX2 - (sumX * sumX / n);
+      if (denominator === 0) return null;
+      const m = (sumXY - (sumX * sumY / n)) / denominator;
+      const c = (sumY / n) - (m * sumX / n);
+      return { m, c };
+    }
+
+    function prepareCanvas(canvas) {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = Math.max(1, Math.round(rect.width * dpr));
+      canvas.height = Math.max(1, Math.round(rect.height * dpr));
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { ctx, width: rect.width, height: rect.height };
+    }
+
+    function drawChart(pts1, pts2, line1, line2) {
+      const canvas = document.getElementById("regressionChart");
+      const { ctx, width, height } = prepareCanvas(canvas);
+      ctx.clearRect(0, 0, width, height);
+      ctx.font = "14px Times New Roman";
+      ctx.fillStyle = "#111";
+
+      if (pts1.length < 2 && pts2.length < 2) {
+        ctx.textAlign = "center";
+        ctx.fillText("Graph will appear after entering at least two readings for any temperature.", width / 2, height / 2);
+        return;
+      }
+
+      const left = 50, right = 170, top = 22, bottom = 52;
+      const plotW = width - left - right;
+      const plotH = height - top - bottom;
+
+      let allPts = pts1.concat(pts2);
+      const minX = 0;
+      const maxX = 0.55;
+      const minY = 0;
+      const maxY = Math.max(...allPts.map(p => p.y), (line1 ? line1.m * 0.5 + line1.c : 0), (line2 ? line2.m * 0.5 + line2.c : 0), 1) * 1.1;
+
+      const xRange = maxX - minX;
+      const yRange = maxY - minY;
+
+      const sx = x => left + ((x - minX) / xRange) * plotW;
+      const sy = y => top + plotH - ((y - minY) / yRange) * plotH;
+
+      // Axes
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(left, top);
+      ctx.lineTo(left, top + plotH);
+      ctx.lineTo(left + plotW, top + plotH);
+      ctx.stroke();
+
+      // Y labels
+      ctx.textAlign = "right";
+      ctx.fillText(maxY.toFixed(2), left - 6, top + 5);
+      ctx.fillText(minY.toFixed(2), left - 6, top + plotH + 4);
+
+      // X labels
+      ctx.textAlign = "center";
+      currents.forEach(curr => {
+        ctx.fillText(curr.toFixed(1), sx(curr), top + plotH + 18);
+        ctx.beginPath();
+        ctx.moveTo(sx(curr), top + plotH);
+        ctx.lineTo(sx(curr), top + plotH + 4);
+        ctx.stroke();
+      });
+
+      // Plot Line 1
+      if (line1) {
+        ctx.strokeStyle = "#1d4ed8";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(sx(0.1), sy(line1.m * 0.1 + line1.c));
+        ctx.lineTo(sx(0.5), sy(line1.m * 0.5 + line1.c));
+        ctx.stroke();
+      }
+
+      // Plot Line 2
+      if (line2) {
+        ctx.strokeStyle = "#b91c1c";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(sx(0.1), sy(line2.m * 0.1 + line2.c));
+        ctx.lineTo(sx(0.5), sy(line2.m * 0.5 + line2.c));
+        ctx.stroke();
+      }
+
+      // Points 1
+      pts1.forEach((point) => {
+        ctx.fillStyle = "#3b82f6";
+        ctx.beginPath();
+        ctx.arc(sx(point.x), sy(point.y), 4, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Points 2
+      pts2.forEach((point) => {
+        ctx.fillStyle = "#ef4444";
+        ctx.beginPath();
+        ctx.arc(sx(point.x), sy(point.y), 4, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Labels
+      ctx.fillStyle = "#111";
+      ctx.textAlign = "center";
+      ctx.fillText("Current I (A)", left + plotW / 2, height - 10);
+      ctx.save();
+      ctx.translate(16, top + plotH / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText("Voltage V (V)", 0, 0);
+      ctx.restore();
+
+      // Legend
+      const legX = width - right + 10;
+      const legY = top + 10;
+      ctx.textAlign = "left";
+
+      if (pts1.length > 0) {
+        ctx.fillStyle = "#1d4ed8";
+        ctx.fillRect(legX, legY, 14, 14);
+        ctx.fillStyle = "#111";
+        ctx.fillText("θ1 (Room Temp)", legX + 22, legY + 12);
+        if (line1) {
+          ctx.fillStyle = "#1d4ed8";
+          ctx.fillText(`V = ${line1.m.toFixed(3)} I ${line1.c >= 0 ? '+' : '-'} ${Math.abs(line1.c).toFixed(3)}`, legX, legY + 30);
+        }
+      }
+
+      if (pts2.length > 0) {
+        const offset2 = (pts1.length > 0 && line1) ? 50 : 0;
+        ctx.fillStyle = "#b91c1c";
+        ctx.fillRect(legX, legY + offset2, 14, 14);
+        ctx.fillStyle = "#111";
+        ctx.fillText("θ2 (High Temp)", legX + 22, legY + offset2 + 12);
+        if (line2) {
+          ctx.fillStyle = "#b91c1c";
+          ctx.fillText(`V = ${line2.m.toFixed(3)} I ${line2.c >= 0 ? '+' : '-'} ${Math.abs(line2.c).toFixed(3)}`, legX, legY + offset2 + 30);
+        }
+      }
+    }
+
+    function calculate() {
+      const t1_1 = num("t1_1");
+      const t1_2 = num("t1_2");
+      const t2_1 = num("t2_1");
+      const t2_2 = num("t2_2");
+
+      const meanT1 = (t1_1 !== null && t1_2 !== null) ? (t1_1 + t1_2) / 2 : null;
+      const meanT2 = (t2_1 !== null && t2_2 !== null) ? (t2_1 + t2_2) / 2 : null;
+
+      setText("mean_t1", meanT1, 2);
+      setText("mean_t2", meanT2, 2);
+
+      let pts1 = [], pts2 = [];
+      let x1 = [], y1 = [], x2 = [], y2 = [];
+
+      for (let i = 0; i < 5; i++) {
+        const v1 = num("v1_" + (i + 1));
+        const v2 = num("v2_" + (i + 1));
+        if (v1 !== null) {
+          pts1.push({ x: currents[i], y: v1 });
+          x1.push(currents[i]);
+          y1.push(v1);
+        }
+        if (v2 !== null) {
+          pts2.push({ x: currents[i], y: v2 });
+          x2.push(currents[i]);
+          y2.push(v2);
+        }
+      }
+
+      const res1 = calculateSlope(x1, y1);
+      const res2 = calculateSlope(x2, y2);
+
+      const R1 = res1 ? res1.m : null;
+      const R2 = res2 ? res2.m : null;
+
+      setText("r1_disp", R1, 3);
+      setText("r2_disp", R2, 3);
+
+      setText("calc_r2", R2, 3);
+      setText("calc_r1", R1, 3);
+      setText("calc_r1_b", R1, 3);
+      setText("calc_t2", meanT2, 2);
+      setText("calc_t1", meanT1, 2);
+
+      let alpha = null;
+      if (R1 !== null && R2 !== null && meanT1 !== null && meanT2 !== null && (meanT2 - meanT1) !== 0 && R1 !== 0) {
+        alpha = (R2 - R1) / (R1 * (meanT2 - meanT1));
+      }
+
+      setText("calc_alpha", alpha, 5);
+
+      setText("res_t1", meanT1, 2);
+      setText("res_r1", R1, 3);
+      setText("res_t2", meanT2, 2);
+      setText("res_r2", R2, 3);
+      setText("res_alpha", alpha, 5);
+
+      let diff = null;
+      if (alpha !== null) {
+        diff = Math.abs((alpha - referenceAlpha) / referenceAlpha) * 100;
+        document.getElementById("res_error").textContent = diff.toFixed(2);
+        document.getElementById("res_diff_container").style.display = "block";
+      } else {
+        document.getElementById("res_diff_container").style.display = "none";
+      }
+
+      drawChart(pts1, pts2, res1, res2);
+
+      writeReports(meanT1, meanT2, R1, R2, alpha, diff);
+    }
+
+    function writeReports(t1, t2, r1, r2, alpha, diff) {
+      const discussion = document.getElementById("discussion");
+      if (t1 === null || t2 === null || r1 === null || r2 === null || alpha === null) {
+        discussion.textContent = "The discussion will be generated automatically after the required observations and temperatures are entered.";
+        return;
+      }
+
+      discussion.textContent =
+        "In this experiment, the temperature coefficient of resistance for a given wire was determined using Ohm's Law. By plotting the voltage vs current graph for two different temperatures, the resistance of the wire at room temperature (\u03b81 = " + t1.toFixed(2) + " °C) was found to be " + r1.toFixed(3) + " \u03a9, and at a higher temperature (\u03b82 = " + t2.toFixed(2) + " °C) it increased to " + r2.toFixed(3) + " \u03a9.\n\n" +
+        "The experimental value of the temperature coefficient of resistance (\u03b1) was calculated as " + alpha.toFixed(5) + " °C⁻¹. Compared to the reference value for Copper (\u2248 0.00393 °C⁻¹), the percentage difference is " + diff.toFixed(2) + "%. " +
+        "Small variations may be attributed to fluctuations in room temperature during data collection, heating of the resistance coil due to the current passing through it, contact resistance in the circuit connections, and reading errors of the meters. Overall, the experiment confirms that the resistance of a conductor increases linearly with temperature.";
+    }
+
+    document.addEventListener("input", calculate);
+    window.addEventListener("resize", calculate);
+    calculate();
+  </script>
+</body>
+
+</html>
