@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Physics Lab Experiment #5 - Ohm's Law and Equivalent Resistances</title>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    body { font-family: "Times New Roman", serif; max-width: 980px; margin: auto; padding: 24px; color: #111; font-size: 18px; line-height: 1.28 }
+    h1, h2, h3 { margin: 0 0 12px }
+    h1 { font-size: 24px; text-align: left }
+    h2 { font-size: 22px; text-align: left }
+    h3 { font-size: 20px; text-align: left }
+    p { margin: 8px 0 }
+    ul, ol { margin-top: 6px }
+    li { margin: 5px 0 }
+    .section { margin-top: 28px }
+    .center { text-align: center }
+    .caption { text-align: center; margin: 12px 0 6px; font-size: 19px }
+    .equation { text-align: center; font-size: 21px; margin: 12px 0 }
+    table { width: 100%; border-collapse: collapse; margin: 8px 0 30px; table-layout: fixed }
+    th, td { border: 1px solid #000; text-align: center; vertical-align: middle; padding: 8px 6px; font-weight: normal }
+    th { line-height: 1.15; background: #fafafa; }
+    input { box-sizing: border-box; width: 100%; border: 0; background: transparent; text-align: center; font-family: inherit; font-size: 16px; padding: 5px 2px; border-bottom: 1px dashed #ccc; }
+    input:focus { outline: none; border-bottom: 1px solid #333; background: #f0f8ff; }
+    input::placeholder { color: #777; opacity: 1 }
+    input[readonly] { color: #000; border-bottom: none; }
+    .formula-line { font-size: 21px; margin: 18px 0 }
+    .line-value { display: inline-block; min-width: 145px; border-bottom: 1px solid #000; text-align: center; min-height: 22px }
+    .chart-box { border: 1px solid #000; padding: 10px; margin: 10px 0 28px }
+    .chart-title { text-align: center; font-weight: bold; margin-bottom: 8px }
+    canvas { width: 100%; height: 360px; display: block }
+    .auto-report-box { min-height: 86px; border: 1px solid #000; padding: 12px; margin: 8px 0 18px; text-align: justify; white-space: pre-wrap }
+    .footer { margin: 34px 0 10px; padding-top: 12px; border-top: 1px solid #000; text-align: center; font-size: 15px; font-family: Arial, sans-serif; letter-spacing: .2px }
+    button { font-family: Arial, sans-serif; font-size: 16px; padding: 10px 16px; margin: 12px 0 30px; cursor: pointer; background: #333; color: white; border: none; border-radius: 4px; }
+    button:hover { background: #555; }
+    @media print {
+      button { display: none }
+      body { max-width: none; padding: 10px; font-size: 16px }
+      input::placeholder { color: transparent }
+      input { border-bottom: none; }
+      canvas { height: 280px }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Experiment No. 5:</h1>
+  <p><b>(a) Study of Ohm's law using unknown resistances.</b></p>
+  <p><b>(b) Determination of the equivalent resistances for series and parallel combinations of resistors.</b></p>
+
+  <div class="section">
+    <h2>5.1 Objectives</h2>
+    <p>The main objective of this lab is to design circuits with different combinations of unknown resistances to verify the Ohm's law and determine the equivalent resistances for series and parallel combinations of resistors.</p>
+  </div>
+
+  <div class="section">
+    <h2>5.2 Prelab</h2>
+    <p>Student must have clear idea about the objectives and related theory of the experiment. Lab Demonstrator will confirm that the students have submitted their previous group lab reports in printed form before giving them the attendance. The marks of performance depend greatly on this part.</p>
+  </div>
+
+  <div class="section">
+    <h2>5.3 Outcomes</h2>
+    <p>After completing this lab work student will be able to answer the following questions:</p>
+    <ul>
+      <li>What is the Ohm's law? How Ohm's law looks in a graph? How unknown resistance can be determined from the graph?</li>
+      <li>How to construct series and parallel combinations of resistors and how the equivalent resistances can be calculated?</li>
+      <li>For all possible combinations of resistors, how to plot voltage versus current graph and find the slope of best fitted lines to determine the unknown resistances?</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>5.4 Timing and Length of Investigation (Total 2 Hours 20 Minutes):</h2>
+    <ul>
+      <li><b>Lab Preparation (10 minutes):</b> Students will sit for the lab class with preparations and class attendance will be taken.</li>
+      <li><b>Lecture on Theory (30 minutes):</b> Teacher will clarify the objective and theory of the experiment.</li>
+      <li><b>Lecture on Procedure (15 minutes):</b> Demonstrator will make the students understand the procedure of the experiment.</li>
+      <li><b>Experimental Work (60 minutes):</b> Design of experiment: 10 minutes; Data collection: 30 minutes; Data analysis, drawing graphs, and completing the result part: 20 minutes.</li>
+      <li><b>Post Lab Discussion (10 minutes):</b> Teacher will summarize the total lab work and have a discussion with the students related to the questions given in the outcomes part.</li>
+      <li><b>Report Preparation &amp; Submission (10 minutes):</b> After completing the lab reports, students will submit their lab reports in the next class as groups.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>5.5 Theory</h2>
+    <p>Ohm's law states that at a constant temperature the current through a conductor between two points is directly proportional to the voltage across those two points. Introducing the constant of proportionality, the resistance, one arrives at the usual mathematical equation that describes this relationship:</p>
+    <div class="equation">\( V = IR \)</div>
+    <p>where \(I\) is the current and \(V\) is the potential difference across the resistance \(R\).</p>
+    
+    <p>When \(N\) number of resistors are connected in series and parallel connections, their equivalent resistances \(R_s\) and \(R_p\) are calculated by the following two equations:</p>
+    <div class="equation">\( R_s = R_1 + R_2 + \cdots + R_N \)</div>
+    <div class="equation">\( \dfrac{1}{R_p} = \dfrac{1}{R_1} + \dfrac{1}{R_2} + \cdots + \dfrac{1}{R_N} \)</div>
+  </div>
+
+  <div class="section">
+    <h2>5.6 Apparatus</h2>
+    <p>Power supply, variable resistor, ammeter, voltmeter, unknown resistors and connecting wires.</p>
+  </div>
+
+  <div class="section">
+    <h2>5.7 Procedure</h2>
+    <ul>
+      <li>Construct the above circuits with 2 unknown resistances (\(R_1\) &amp; \(R_2\)).</li>
+      <li>Using rheostat \(R_h\), choose current not more than 1 A. Vary \(R_h\) to select different currents through the circuit as measured by the ammeter A.</li>
+      <li>Measure the corresponding potential differences (V) in the voltmeter.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>5.8 Experimental Data</h2>
+    <div class="caption">Table 5.1: Voltage current records for \(R_1\) and \(R_2\)</div>
+    <table>
+      <tr>
+        <th>Resistors</th>
+        <th>Current I (A)</th>
+        <th>Voltage V (V)</th>
+      </tr>
+      <tr><td rowspan="6">\(R_1\)</td><td>0.1</td><td><input id="v1_1" type="number" step="any"></td></tr>
+      <tr><td>0.2</td><td><input id="v1_2" type="number" step="any"></td></tr>
+      <tr><td>0.3</td><td><input id="v1_3" type="number" step="any"></td></tr>
+      <tr><td>0.4</td><td><input id="v1_4" type="number" step="any"></td></tr>
+      <tr><td>0.5</td><td><input id="v1_5" type="number" step="any"></td></tr>
+      <tr><td>0.6</td><td><input id="v1_6" type="number" step="any"></td></tr>
+      <tr><td rowspan="6">\(R_2\)</td><td>0.1</td><td><input id="v2_1" type="number" step="any"></td></tr>
+      <tr><td>0.2</td><td><input id="v2_2" type="number" step="any"></td></tr>
+      <tr><td>0.3</td><td><input id="v2_3" type="number" step="any"></td></tr>
+      <tr><td>0.4</td><td><input id="v2_4" type="number" step="any"></td></tr>
+      <tr><td>0.5</td><td><input id="v2_5" type="number" step="any"></td></tr>
+      <tr><td>0.6</td><td><input id="v2_6" type="number" step="any"></td></tr>
+    </table>
+    
+    <div class="caption">Table 5.2: Voltage current records for \(R_s\) and \(R_p\)</div>
+    <table>
+      <tr>
+        <th>Resistors</th>
+        <th>Current I (A)</th>
+        <th>Voltage V (V)</th>
+      </tr>
+      <tr><td rowspan="6">\(R_s\) (Series)</td><td>0.05</td><td><input id="v3_1" type="number" step="any"></td></tr>
+      <tr><td>0.10</td><td><input id="v3_2" type="number" step="any"></td></tr>
+      <tr><td>0.15</td><td><input id="v3_3" type="number" step="any"></td></tr>
+      <tr><td>0.20</td><td><input id="v3_4" type="number" step="any"></td></tr>
+      <tr><td>0.25</td><td><input id="v3_5" type="number" step="any"></td></tr>
+      <tr><td>0.30</td><td><input id="v3_6" type="number" step="any"></td></tr>
+      <tr><td rowspan="6">\(R_p\) (Parallel)</td><td>0.05</td><td><input id="v4_1" type="number" step="any"></td></tr>
+      <tr><td>0.10</td><td><input id="v4_2" type="number" step="any"></td></tr>
+      <tr><td>0.15</td><td><input id="v4_3" type="number" step="any"></td></tr>
+      <tr><td>0.20</td><td><input id="v4_4" type="number" step="any"></td></tr>
+      <tr><td>0.25</td><td><input id="v4_5" type="number" step="any"></td></tr>
+      <tr><td>0.30</td><td><input id="v4_6" type="number" step="any"></td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Graphs:</h2>
+    <div class="chart-box">
+      <div class="chart-title">V vs I for \(R_1\) and \(R_2\)</div>
+      <canvas id="chart1"></canvas>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">V vs I for \(R_s\) and \(R_p\)</div>
+      <canvas id="chart2"></canvas>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>5.9 Result</h2>
+    <div class="caption">Table 5.3: Values of \(R_1, R_2, R_s\) and \(R_p\)</div>
+    <table>
+      <tr>
+        <th rowspan="2">Resistors</th>
+        <th rowspan="2">Resistances from the graphs<br>Values in Ohms</th>
+        <th rowspan="2">Calculated Values of \(R_s\) and \(R_p\)<br>in Ohms</th>
+        <th>Comments</th>
+      </tr>
+      <tr>
+        <td style="font-size: 14px;">(Difference)</td>
+      </tr>
+      <tr>
+        <td>\(R_1\)</td>
+        <td><span id="res_r1">-</span></td>
+        <td style="background:#eee"></td>
+        <td style="background:#eee"></td>
+      </tr>
+      <tr>
+        <td>\(R_2\)</td>
+        <td><span id="res_r2">-</span></td>
+        <td style="background:#eee"></td>
+        <td style="background:#eee"></td>
+      </tr>
+      <tr>
+        <td>\(R_s\)</td>
+        <td><span id="res_rs">-</span></td>
+        <td><span id="calc_rs">-</span></td>
+        <td><span id="diff_rs">-</span></td>
+      </tr>
+      <tr>
+        <td>\(R_p\)</td>
+        <td><span id="res_rp">-</span></td>
+        <td><span id="calc_rp">-</span></td>
+        <td><span id="diff_rp">-</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>5.11 Discussion</h2>
+    <div id="discussion" class="auto-report-box"></div>
+  </div>
+
+  <div class="section">
+    <h2>5.12 Resources</h2>
+    <p>For further understanding students may go through the following resources:</p>
+    <ul>
+      <li>Fundamental of Physics (10th Edition): Ohm's Law (Chapter 26, page 756-759)</li>
+      <li>Video Links: 
+        <ul>
+          <li><a href="https://www.youtube.com/watch?v=Vh3XGz7hgU4">https://www.youtube.com/watch?v=Vh3XGz7hgU4</a></li>
+          <li><a href="https://www.youtube.com/watch?v=hxYn74Yhkpk">https://www.youtube.com/watch?v=hxYn74Yhkpk</a></li>
+          <li><a href="https://www.youtube.com/watch?v=2clz4pLsI_w">https://www.youtube.com/watch?v=2clz4pLsI_w</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div style="text-align:center;">
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+  <footer class="footer">All rights reserved NAHID | hexagonlabo.org</footer>
+
+  <script>
+    const currents1 = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6];
+    const currents2 = [0.05, 0.10, 0.15, 0.20, 0.25, 0.30];
+
+    function num(id) {
+      const value = parseFloat(document.getElementById(id).value);
+      return Number.isFinite(value) ? value : null;
+    }
+
+    function setText(id, value, digits = 4) {
+      document.getElementById(id).textContent = Number.isFinite(value) ? value.toFixed(digits) : "-";
+    }
+
+    function calculateSlope(xValues, yValues) {
+      const n = xValues.length;
+      if (n < 2) return null;
+      let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+      for (let i = 0; i < n; i++) {
+        sumX += xValues[i];
+        sumY += yValues[i];
+        sumXY += xValues[i] * yValues[i];
+        sumX2 += xValues[i] * xValues[i];
+      }
+      const denominator = sumX2 - (sumX * sumX / n);
+      if (denominator === 0) return null;
+      const m = (sumXY - (sumX * sumY / n)) / denominator;
+      const c = (sumY / n) - (m * sumX / n);
+      return { m, c };
+    }
+
+    function prepareCanvas(canvas) {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = Math.max(1, Math.round(rect.width * dpr));
+      canvas.height = Math.max(1, Math.round(rect.height * dpr));
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { ctx, width: rect.width, height: rect.height };
+    }
+
+    function drawChart(canvasId, pts1, pts2, line1, line2, label1, label2, color1, color2, maxX) {
+      const canvas = document.getElementById(canvasId);
+      const { ctx, width, height } = prepareCanvas(canvas);
+      ctx.clearRect(0, 0, width, height);
+      ctx.font = "14px Times New Roman";
+      ctx.fillStyle = "#111";
+
+      if (pts1.length < 2 && pts2.length < 2) {
+        ctx.textAlign = "center";
+        ctx.fillText("Graph will appear after entering at least two readings.", width / 2, height / 2);
+        return;
+      }
+
+      const left = 50, right = 180, top = 22, bottom = 52;
+      const plotW = width - left - right;
+      const plotH = height - top - bottom;
+
+      let allPts = pts1.concat(pts2);
+      const minX = 0;
+      
+      let maxLineY = 0;
+      if(line1) maxLineY = Math.max(maxLineY, line1.m * maxX + line1.c);
+      if(line2) maxLineY = Math.max(maxLineY, line2.m * maxX + line2.c);
+      
+      const maxY = Math.max(...allPts.map(p => p.y), maxLineY, 0.5) * 1.1;
+
+      const xRange = maxX - minX;
+      
+      const sx = x => left + ((x - minX) / xRange) * plotW;
+      const sy = y => top + plotH - ((y - 0) / maxY) * plotH; 
+
+      // Axes
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(left, top);
+      ctx.lineTo(left, top + plotH);
+      ctx.lineTo(left + plotW, top + plotH);
+      ctx.stroke();
+
+      // Y labels
+      ctx.textAlign = "right";
+      ctx.fillText(maxY.toFixed(2), left - 6, top + 5);
+      ctx.fillText("0.00", left - 6, top + plotH + 4);
+
+      // X labels
+      ctx.textAlign = "center";
+      const step = maxX / 6;
+      for(let i=1; i<=6; i++) {
+        let curr = step * i;
+        ctx.fillText(curr.toFixed(2), sx(curr), top + plotH + 18);
+        ctx.beginPath();
+        ctx.moveTo(sx(curr), top + plotH);
+        ctx.lineTo(sx(curr), top + plotH + 4);
+        ctx.stroke();
+      }
+
+      // Plot Line 1
+      if (line1) {
+        ctx.strokeStyle = color1;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(sx(0), sy(line1.c));
+        ctx.lineTo(sx(maxX), sy(line1.m * maxX + line1.c));
+        ctx.stroke();
+      }
+
+      // Plot Line 2
+      if (line2) {
+        ctx.strokeStyle = color2;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(sx(0), sy(line2.c));
+        ctx.lineTo(sx(maxX), sy(line2.m * maxX + line2.c));
+        ctx.stroke();
+      }
+
+      // Points 1
+      pts1.forEach((point) => {
+        ctx.fillStyle = color1;
+        ctx.beginPath();
+        ctx.arc(sx(point.x), sy(point.y), 4, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Points 2
+      pts2.forEach((point) => {
+        ctx.fillStyle = color2;
+        ctx.beginPath();
+        ctx.arc(sx(point.x), sy(point.y), 4, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Labels
+      ctx.fillStyle = "#111";
+      ctx.textAlign = "center";
+      ctx.fillText("Current I (A)", left + plotW / 2, height - 10);
+      ctx.save();
+      ctx.translate(16, top + plotH / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText("Voltage V (V)", 0, 0);
+      ctx.restore();
+
+      // Legend
+      const legX = width - right + 10;
+      const legY = top + 10;
+      ctx.textAlign = "left";
+
+      if (pts1.length > 0) {
+        ctx.fillStyle = color1;
+        ctx.fillRect(legX, legY, 14, 14);
+        ctx.fillStyle = "#111";
+        ctx.fillText(label1, legX + 22, legY + 12);
+        if (line1) {
+          ctx.fillStyle = color1;
+          ctx.fillText(`y = ${line1.m.toFixed(4)}x ${line1.c >= 0 ? '+' : '-'} ${Math.abs(line1.c).toFixed(4)}`, legX, legY + 30);
+        }
+      }
+
+      if (pts2.length > 0) {
+        const offset2 = (pts1.length > 0 && line1) ? 50 : 0;
+        ctx.fillStyle = color2;
+        ctx.fillRect(legX, legY + offset2, 14, 14);
+        ctx.fillStyle = "#111";
+        ctx.fillText(label2, legX + 22, legY + offset2 + 12);
+        if (line2) {
+          ctx.fillStyle = color2;
+          ctx.fillText(`y = ${line2.m.toFixed(4)}x ${line2.c >= 0 ? '+' : '-'} ${Math.abs(line2.c).toFixed(4)}`, legX, legY + offset2 + 30);
+        }
+      }
+    }
+
+    function calculate() {
+      let pts1 = [], pts2 = [], pts3 = [], pts4 = [];
+      let x1 = [], y1 = [], x2 = [], y2 = [], x3 = [], y3 = [], x4 = [], y4 = [];
+
+      for (let i = 0; i < 6; i++) {
+        const v1 = num("v1_" + (i + 1));
+        const v2 = num("v2_" + (i + 1));
+        const v3 = num("v3_" + (i + 1));
+        const v4 = num("v4_" + (i + 1));
+        if (v1 !== null) { pts1.push({ x: currents1[i], y: v1 }); x1.push(currents1[i]); y1.push(v1); }
+        if (v2 !== null) { pts2.push({ x: currents1[i], y: v2 }); x2.push(currents1[i]); y2.push(v2); }
+        if (v3 !== null) { pts3.push({ x: currents2[i], y: v3 }); x3.push(currents2[i]); y3.push(v3); }
+        if (v4 !== null) { pts4.push({ x: currents2[i], y: v4 }); x4.push(currents2[i]); y4.push(v4); }
+      }
+
+      const res1 = calculateSlope(x1, y1);
+      const res2 = calculateSlope(x2, y2);
+      const res3 = calculateSlope(x3, y3);
+      const res4 = calculateSlope(x4, y4);
+
+      const R1 = res1 ? res1.m : null;
+      const R2 = res2 ? res2.m : null;
+      const Rs_exp = res3 ? res3.m : null;
+      const Rp_exp = res4 ? res4.m : null;
+
+      setText("res_r1", R1, 3);
+      setText("res_r2", R2, 3);
+      setText("res_rs", Rs_exp, 3);
+      setText("res_rp", Rp_exp, 3);
+
+      let Rs_calc = null, Rp_calc = null;
+      if (R1 !== null && R2 !== null) {
+        Rs_calc = R1 + R2;
+        Rp_calc = (R1 * R2) / (R1 + R2);
+      }
+      setText("calc_rs", Rs_calc, 3);
+      setText("calc_rp", Rp_calc, 3);
+
+      let diff_rs = null, diff_rp = null;
+      if(Rs_exp !== null && Rs_calc !== null && Rs_calc !== 0) {
+        diff_rs = Math.abs((Rs_exp - Rs_calc) / Rs_calc) * 100;
+        setText("diff_rs", diff_rs, 2);
+        document.getElementById("diff_rs").textContent += "%";
+      } else {
+        document.getElementById("diff_rs").textContent = "-";
+      }
+
+      if(Rp_exp !== null && Rp_calc !== null && Rp_calc !== 0) {
+        diff_rp = Math.abs((Rp_exp - Rp_calc) / Rp_calc) * 100;
+        setText("diff_rp", diff_rp, 2);
+        document.getElementById("diff_rp").textContent += "%";
+      } else {
+        document.getElementById("diff_rp").textContent = "-";
+      }
+
+      drawChart("chart1", pts1, pts2, res1, res2, "V vs I (R1)", "V vs I (R2)", "#1d4ed8", "#b91c1c", 0.65);
+      drawChart("chart2", pts3, pts4, res3, res4, "V vs I (Rs)", "V vs I (Rp)", "#047857", "#6d28d9", 0.35);
+
+      writeReports(R1, R2, Rs_exp, Rs_calc, Rp_exp, Rp_calc, diff_rs, diff_rp);
+    }
+
+    function writeReports(r1, r2, rs_exp, rs_calc, rp_exp, rp_calc, diff_rs, diff_rp) {
+      const discussion = document.getElementById("discussion");
+      if (r1 === null || r2 === null || rs_exp === null || rp_exp === null) {
+        discussion.textContent = "The discussion will be generated automatically after the required observations are entered and the graphs are generated.";
+        return;
+      }
+
+      discussion.textContent =
+        "In this experiment, Ohm's law was verified using unknown resistances, and the equivalent resistances for series and parallel combinations were determined. " +
+        "From the V-I graphs, the resistance of the first resistor (R1) was found to be " + r1.toFixed(3) + " \u03a9, and the second resistor (R2) was " + r2.toFixed(3) + " \u03a9.\n\n" +
+        "For the series combination, the experimental equivalent resistance from the graph was " + rs_exp.toFixed(3) + " \u03a9, while the theoretically calculated value (R1 + R2) was " + rs_calc.toFixed(3) + " \u03a9. This gives a percentage difference of " + diff_rs.toFixed(2) + "%.\n\n" +
+        "For the parallel combination, the experimental equivalent resistance from the graph was " + rp_exp.toFixed(3) + " \u03a9, while the theoretically calculated value was " + rp_calc.toFixed(3) + " \u03a9. This gives a percentage difference of " + diff_rp.toFixed(2) + "%.\n\n" +
+        "The small discrepancies between the experimental and calculated values might be due to instrumental errors, contact resistance in the connecting wires, and slight temperature variations during the measurement process.";
+    }
+
+    document.addEventListener("input", calculate);
+    window.addEventListener("resize", calculate);
+    calculate();
+  </script>
+</body>
+</html>
