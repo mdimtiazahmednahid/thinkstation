@@ -235,21 +235,26 @@
       <div>L.C of the screw gauge = <input id="lc-screw-gauge" type="number" step="any"
           style="width: 80px; display: inline-block; border-bottom: 1px dashed #ccc;"> cm.</div>
     </div>
-    
+
     <div class="caption">Table 7.1: Determination of radius of the wire</div>
     <table>
       <tr>
-        <th>Observations</th>
-        <th>Main scale<br>reading (cm)</th>
-        <th>Circular scale<br>reading (cm)</th>
-        <th>Total reading<br>(diameter) (cm)</th>
-        <th>Mean diameter<br>(cm)</th>
-        <th>Mean radius<br>(cm)</th>
+        <th rowspan="2">Observations</th>
+        <th rowspan="2">Main scale<br>reading (cm)</th>
+        <th colspan="2">Circular scale<br>reading</th>
+        <th rowspan="2">Total reading<br>(diameter) (cm)</th>
+        <th rowspan="2">Mean diameter<br>(cm)</th>
+        <th rowspan="2">Mean radius<br>(cm)</th>
+      </tr>
+      <tr>
+        <th>No. of div.</th>
+        <th>Value (cm)</th>
       </tr>
       <tr>
         <td>1</td>
         <td><input type="number" class="msr" step="any"></td>
-        <td><input type="number" class="csr" step="any"></td>
+        <td><input type="number" class="csr-div" step="any"></td>
+        <td><span class="output csr-val">-</span></td>
         <td><span class="output tr">-</span></td>
         <td rowspan="3" style="vertical-align: middle;"><span class="output mean-d">-</span></td>
         <td rowspan="3" style="vertical-align: middle;"><span class="output mean-r">-</span></td>
@@ -257,18 +262,21 @@
       <tr>
         <td>2</td>
         <td><input type="number" class="msr" step="any"></td>
-        <td><input type="number" class="csr" step="any"></td>
+        <td><input type="number" class="csr-div" step="any"></td>
+        <td><span class="output csr-val">-</span></td>
         <td><span class="output tr">-</span></td>
       </tr>
       <tr>
         <td>3</td>
         <td><input type="number" class="msr" step="any"></td>
-        <td><input type="number" class="csr" step="any"></td>
+        <td><input type="number" class="csr-div" step="any"></td>
+        <td><span class="output csr-val">-</span></td>
         <td><span class="output tr">-</span></td>
       </tr>
     </table>
 
-    <p style="margin-top: 1.5em; font-weight: bold; font-size: 19px;">C. Readings for the balance point to calculate unknown resistance X.</p>
+    <p style="margin-top: 1.5em; font-weight: bold; font-size: 19px;">C. Readings for the balance point to calculate
+      unknown resistance X.</p>
     <table>
       <tr>
         <th rowspan="2">Known<br>resistance<br>R (ohm)</th>
@@ -286,7 +294,7 @@
         <th>Mean <i>l</i></th>
       </tr>
       <tr>
-        <td rowspan="2" style="vertical-align: middle;"><input type="number" class="r-val" step="any"></td>
+        <td><input type="number" class="r-val" step="any"></td>
         <td>Left</td>
         <td>Right</td>
         <td><input type="number" class="dir-l" step="any"></td>
@@ -294,9 +302,10 @@
         <td><span class="output mean-l">-</span></td>
         <td><span class="output hun-l">-</span></td>
         <td><span class="output x-val">-</span></td>
-        <td rowspan="4" style="vertical-align: middle;"><span class="output mean-x">-</span></td>
+        <td rowspan="2" style="vertical-align: middle;"><span class="output mean-x">-</span></td>
       </tr>
       <tr>
+        <td><input type="number" class="r-val" step="any"></td>
         <td>Right</td>
         <td>Left</td>
         <td><input type="number" class="dir-l" step="any"></td>
@@ -306,7 +315,7 @@
         <td><span class="output x-val">-</span></td>
       </tr>
       <tr>
-        <td rowspan="2" style="vertical-align: middle;"><input type="number" class="r-val" step="any"></td>
+        <td><input type="number" class="r-val" step="any"></td>
         <td>Left</td>
         <td>Right</td>
         <td><input type="number" class="dir-l" step="any"></td>
@@ -314,8 +323,10 @@
         <td><span class="output mean-l">-</span></td>
         <td><span class="output hun-l">-</span></td>
         <td><span class="output x-val">-</span></td>
+        <td rowspan="2" style="vertical-align: middle;"><span class="output mean-x">-</span></td>
       </tr>
       <tr>
+        <td><input type="number" class="r-val" step="any"></td>
         <td>Right</td>
         <td>Left</td>
         <td><input type="number" class="dir-l" step="any"></td>
@@ -360,7 +371,8 @@
     <h2>7.9 Results:</h2>
     <ol style="line-height: 1.8;">
       <li>The value of unknown resistance X = <span class="line-value" id="out-result-x">-</span> \(\Omega\)</li>
-      <li>The specific resistance of the material of the given wire = <span class="line-value" id="out-result-rho">-</span> \(\Omega \cdot cm\)</li>
+      <li>The specific resistance of the material of the given wire = <span class="line-value"
+          id="out-result-rho">-</span> \(\Omega \cdot cm\)</li>
       <li>Percentage error = <span class="line-value" id="out-result-error">-</span> %</li>
     </ol>
   </div>
@@ -393,21 +405,26 @@
       // Table 1
       const lc = num('lc-screw-gauge');
       const msrEls = document.querySelectorAll('.msr');
-      const csrEls = document.querySelectorAll('.csr');
+      const csrDivEls = document.querySelectorAll('.csr-div');
+      const csrValEls = document.querySelectorAll('.csr-val');
       const trEls = document.querySelectorAll('.tr');
 
       let sumD = 0;
       let countD = 0;
 
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < msrEls.length; i++) {
         const msr = valFromInput(msrEls[i]);
-        const csr = valFromInput(csrEls[i]);
-        if (msr !== null && csr !== null && lc !== null) {
-          const tr = msr + csr * lc;
+        const csrDiv = valFromInput(csrDivEls[i]);
+
+        if (msr !== null && csrDiv !== null && lc !== null) {
+          const csrVal = csrDiv * lc;
+          csrValEls[i].textContent = csrVal.toFixed(4);
+          const tr = msr + csrVal;
           trEls[i].textContent = tr.toFixed(4);
           sumD += tr;
           countD++;
         } else {
+          csrValEls[i].textContent = "-";
           trEls[i].textContent = "-";
         }
       }
@@ -431,16 +448,19 @@
       const meanLEls = document.querySelectorAll('.mean-l');
       const hunLEls = document.querySelectorAll('.hun-l');
       const xEls = document.querySelectorAll('.x-val');
+      const meanXEls = document.querySelectorAll('.mean-x');
       const positions = ['Left', 'Right', 'Left', 'Right'];
 
       let sumX = 0;
       let countX = 0;
+      let pairSums = [0, 0];
+      let pairCounts = [0, 0];
 
       for (let i = 0; i < 4; i++) {
-        const rIndex = Math.floor(i / 2);
-        const rVal = valFromInput(rEls[rIndex]);
+        const rVal = valFromInput(rEls[i]);
         const dirL = valFromInput(dirEls[i]);
         const revL = valFromInput(revEls[i]);
+        const pairIndex = Math.floor(i / 2);
 
         if (rVal !== null && dirL !== null && revL !== null) {
           const meanL = (dirL + revL) / 2;
@@ -459,10 +479,20 @@
 
           sumX += xVal;
           countX++;
+          pairSums[pairIndex] += xVal;
+          pairCounts[pairIndex]++;
         } else {
           meanLEls[i].textContent = "-";
           hunLEls[i].textContent = "-";
           xEls[i].textContent = "-";
+        }
+      }
+
+      for (let j = 0; j < 2; j++) {
+        if (pairCounts[j] > 0) {
+          meanXEls[j].textContent = (pairSums[j] / pairCounts[j]).toFixed(4);
+        } else {
+          if(meanXEls[j]) meanXEls[j].textContent = "-";
         }
       }
 
