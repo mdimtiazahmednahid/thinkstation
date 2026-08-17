@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Physics Lab Experiment #7 - Meter Bridge</title>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    body { font-family: "Times New Roman", serif; max-width: 980px; margin: auto; padding: 24px; color: #111; font-size: 18px; line-height: 1.28 }
+    h1, h2, h3 { margin: 0 0 12px }
+    h1 { font-size: 24px; text-align: left }
+    h2 { font-size: 22px; text-align: left }
+    h3 { font-size: 20px; text-align: left }
+    p { margin: 8px 0 }
+    ul, ol { margin-top: 6px }
+    li { margin: 5px 0 }
+    .section { margin-top: 28px }
+    .center { text-align: center }
+    .caption { text-align: center; margin: 12px 0 6px; font-size: 19px }
+    .equation { text-align: center; font-size: 21px; margin: 12px 0 }
+    table { width: 100%; border-collapse: collapse; margin: 8px 0 30px; table-layout: fixed }
+    th, td { border: 1px solid #000; text-align: center; vertical-align: middle; padding: 8px 6px; font-weight: normal }
+    th { line-height: 1.15; background: #fafafa; }
+    input { box-sizing: border-box; width: 100%; border: 0; background: transparent; text-align: center; font-family: inherit; font-size: 16px; padding: 5px 2px; border-bottom: 1px dashed #ccc; }
+    input:focus { outline: none; border-bottom: 1px solid #333; background: #f0f8ff; }
+    input::placeholder { color: #777; opacity: 1 }
+    input[readonly] { color: #000; border-bottom: none; }
+    .formula-line { font-size: 21px; margin: 18px 0 }
+    .line-value { display: inline-block; min-width: 145px; border-bottom: 1px solid #000; text-align: center; min-height: 22px }
+    .chart-box { border: 1px solid #000; padding: 10px; margin: 10px 0 28px }
+    .chart-title { text-align: center; font-weight: bold; margin-bottom: 8px }
+    canvas { width: 100%; height: 360px; display: block }
+    .auto-report-box { min-height: 86px; border: 1px solid #000; padding: 12px; margin: 8px 0 18px; text-align: justify; white-space: pre-wrap }
+    .footer { margin: 34px 0 10px; padding-top: 12px; border-top: 1px solid #000; text-align: center; font-size: 15px; font-family: Arial, sans-serif; letter-spacing: .2px }
+    button { font-family: Arial, sans-serif; font-size: 16px; padding: 10px 16px; margin: 12px 0 30px; cursor: pointer; background: #333; color: white; border: none; border-radius: 4px; }
+    button:hover { background: #555; }
+    
+    /* Utility to hide arrows in number inputs */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    @media print {
+      button { display: none }
+      body { max-width: none; padding: 10px; font-size: 16px }
+      input::placeholder { color: transparent }
+      input { border-bottom: none; }
+      canvas { height: 280px }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Experiment No. 7:</h1>
+  <p><b>Determination of specific resistance of the material of a given wire using a meter bridge.</b></p>
+
+  <div class="section">
+    <h2>7.8 Observations</h2>
+    <p>A. Length of the wire \(L\) = <input id="wire-length" type="number" step="any" style="width: 80px; display: inline-block;"> cm</p>
+    <p>B. Radius of the wire (\(r\))</p>
+    <p>L.C of the screw gauge = <input id="lc-screw-gauge" type="number" step="any" style="width: 80px; display: inline-block;"> cm</p>
+
+    <div class="caption">Table 7.1: Determination of radius of the wire</div>
+    <table>
+      <tr>
+        <th>Observations</th>
+        <th>Main scale<br>reading (cm)</th>
+        <th>Circular scale<br>reading (cm)</th>
+        <th>Total reading<br>(diameter) (cm)</th>
+        <th>Mean diameter<br>(cm)</th>
+        <th>Mean radius<br>(cm)</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td><input type="number" class="msr" step="any"></td>
+        <td><input type="number" class="csr" step="any"></td>
+        <td><span class="output tr">-</span></td>
+        <td rowspan="3" style="vertical-align: middle;"><span class="output mean-d">-</span></td>
+        <td rowspan="3" style="vertical-align: middle;"><span class="output mean-r">-</span></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><input type="number" class="msr" step="any"></td>
+        <td><input type="number" class="csr" step="any"></td>
+        <td><span class="output tr">-</span></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><input type="number" class="msr" step="any"></td>
+        <td><input type="number" class="csr" step="any"></td>
+        <td><span class="output tr">-</span></td>
+      </tr>
+    </table>
+
+    <div class="caption">Table 7.2: Readings for the balance point to calculate unknown resistance \(X\)</div>
+    <table>
+      <tr>
+        <th rowspan="2">Known<br>resistance<br>\(R\) (\(\Omega\))</th>
+        <th rowspan="2">Position of<br>Unknown<br>resistance \(X\)</th>
+        <th colspan="3">Balance point for \(l\)</th>
+        <th rowspan="2">\(100-l\)</th>
+        <th rowspan="2">\(X\) (\(\Omega\))</th>
+        <th rowspan="2">Mean \(X\)<br>(\(\Omega\))</th>
+      </tr>
+      <tr>
+        <th>Direct</th>
+        <th>Reverse</th>
+        <th>Mean \(l\)</th>
+      </tr>
+      <tr>
+        <td><input type="number" class="r-val" step="any"></td>
+        <td>Left</td>
+        <td><input type="number" class="dir-l" step="any"></td>
+        <td><input type="number" class="rev-l" step="any"></td>
+        <td><span class="output mean-l">-</span></td>
+        <td><span class="output hun-l">-</span></td>
+        <td><span class="output x-val">-</span></td>
+        <td rowspan="4" style="vertical-align: middle;"><span class="output mean-x">-</span></td>
+      </tr>
+      <tr>
+        <td><input type="number" class="r-val" step="any"></td>
+        <td>Right</td>
+        <td><input type="number" class="dir-l" step="any"></td>
+        <td><input type="number" class="rev-l" step="any"></td>
+        <td><span class="output mean-l">-</span></td>
+        <td><span class="output hun-l">-</span></td>
+        <td><span class="output x-val">-</span></td>
+      </tr>
+      <tr>
+        <td><input type="number" class="r-val" step="any"></td>
+        <td>Left</td>
+        <td><input type="number" class="dir-l" step="any"></td>
+        <td><input type="number" class="rev-l" step="any"></td>
+        <td><span class="output mean-l">-</span></td>
+        <td><span class="output hun-l">-</span></td>
+        <td><span class="output x-val">-</span></td>
+      </tr>
+      <tr>
+        <td><input type="number" class="r-val" step="any"></td>
+        <td>Right</td>
+        <td><input type="number" class="dir-l" step="any"></td>
+        <td><input type="number" class="rev-l" step="any"></td>
+        <td><span class="output mean-l">-</span></td>
+        <td><span class="output hun-l">-</span></td>
+        <td><span class="output x-val">-</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>7.9 Analysis and Calculations:</h2>
+    <p><b>Calculation for \(X\):</b></p>
+    <div class="equation">\( X = \frac{Rl}{100 - l} \) (Left gap)</div>
+    <div class="equation">\( X = \frac{R(100 - l)}{l} \) (Right gap)</div>
+    <p class="center">Calculate mean \(X\) = \(\frac{X_1+X_2+X_3+X_4}{4}\) = <span class="line-value" id="out-mean-x">-</span> \(\Omega\)</p>
+
+    <p><b>Calculation for specific resistance:</b></p>
+    <p>Specific resistance of the material of the given wire,</p>
+    <div class="equation">\( \rho = \frac{X\pi r^2}{L} \) = <span class="line-value" id="out-rho">-</span> \(\Omega \cdot cm\)</div>
+    
+    <p class="center" style="margin-top: 20px;">
+      Standard value of the specific resistance, \(\rho_0\) = 
+      <input id="rho-0" type="number" step="any" style="width: 100px; display: inline-block;"> \(\Omega \cdot cm\)
+    </p>
+    <div class="equation">Percentage error = \( \frac{|\rho - \rho_0|}{\rho_0} \times 100 \% \) = <span class="line-value" id="out-error">-</span> %</div>
+  </div>
+
+  <div class="section">
+    <h2>7.11 Discussion</h2>
+    <div id="discussion" class="auto-report-box">The discussion will be generated automatically after the required observations are entered and calculations are complete.</div>
+  </div>
+
+  <div style="text-align:center;">
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+  <footer class="footer">All rights reserved NAHID | hexagonlabo.org</footer>
+
+  <script>
+    function num(id) {
+      const el = document.getElementById(id);
+      if(!el) return null;
+      const value = parseFloat(el.value);
+      return Number.isFinite(value) ? value : null;
+    }
+
+    function valFromInput(el) {
+      const value = parseFloat(el.value);
+      return Number.isFinite(value) ? value : null;
+    }
+
+    function calculate() {
+      // Table 1
+      const lc = num('lc-screw-gauge');
+      const msrEls = document.querySelectorAll('.msr');
+      const csrEls = document.querySelectorAll('.csr');
+      const trEls = document.querySelectorAll('.tr');
+      
+      let sumD = 0;
+      let countD = 0;
+
+      for(let i=0; i<3; i++) {
+        const msr = valFromInput(msrEls[i]);
+        const csr = valFromInput(csrEls[i]);
+        if(msr !== null && csr !== null && lc !== null) {
+            const tr = msr + csr * lc;
+            trEls[i].textContent = tr.toFixed(4);
+            sumD += tr;
+            countD++;
+        } else {
+            trEls[i].textContent = "-";
+        }
+      }
+
+      let meanR = null;
+      let meanD = null;
+      if(countD > 0) {
+          meanD = sumD / countD;
+          meanR = meanD / 2;
+          document.querySelector('.mean-d').textContent = meanD.toFixed(4);
+          document.querySelector('.mean-r').textContent = meanR.toFixed(4);
+      } else {
+          document.querySelector('.mean-d').textContent = "-";
+          document.querySelector('.mean-r').textContent = "-";
+      }
+
+      // Table 2
+      const rEls = document.querySelectorAll('.r-val');
+      const dirEls = document.querySelectorAll('.dir-l');
+      const revEls = document.querySelectorAll('.rev-l');
+      const meanLEls = document.querySelectorAll('.mean-l');
+      const hunLEls = document.querySelectorAll('.hun-l');
+      const xEls = document.querySelectorAll('.x-val');
+      const positions = ['Left', 'Right', 'Left', 'Right'];
+      
+      let sumX = 0;
+      let countX = 0;
+
+      for(let i=0; i<4; i++) {
+          const rVal = valFromInput(rEls[i]);
+          const dirL = valFromInput(dirEls[i]);
+          const revL = valFromInput(revEls[i]);
+
+          if(rVal !== null && dirL !== null && revL !== null) {
+              const meanL = (dirL + revL) / 2;
+              const hunL = 100 - meanL;
+              let xVal = 0;
+              
+              if(positions[i] === 'Left') {
+                  xVal = rVal * meanL / hunL;
+              } else {
+                  xVal = rVal * hunL / meanL;
+              }
+
+              meanLEls[i].textContent = meanL.toFixed(2);
+              hunLEls[i].textContent = hunL.toFixed(2);
+              xEls[i].textContent = xVal.toFixed(4);
+
+              sumX += xVal;
+              countX++;
+          } else {
+              meanLEls[i].textContent = "-";
+              hunLEls[i].textContent = "-";
+              xEls[i].textContent = "-";
+          }
+      }
+
+      let meanX = null;
+      if(countX > 0) {
+          meanX = sumX / countX;
+          document.querySelector('.mean-x').textContent = meanX.toFixed(4);
+          document.getElementById('out-mean-x').textContent = meanX.toFixed(4);
+      } else {
+          document.querySelector('.mean-x').textContent = "-";
+          document.getElementById('out-mean-x').textContent = "-";
+      }
+
+      // Final Calculation
+      const length = num('wire-length');
+      let rho = null;
+      if(length !== null && length > 0 && meanX !== null && meanR !== null) {
+          rho = meanX * Math.PI * Math.pow(meanR, 2) / length;
+          document.getElementById('out-rho').textContent = rho.toExponential(4);
+      } else {
+          document.getElementById('out-rho').textContent = "-";
+      }
+
+      const rho0 = num('rho-0');
+      let error = null;
+      if(rho !== null && rho0 !== null && rho0 !== 0) {
+          error = Math.abs(rho - rho0) / rho0 * 100;
+          document.getElementById('out-error').textContent = error.toFixed(2);
+      } else {
+          document.getElementById('out-error').textContent = "-";
+      }
+
+      writeReports(meanR, meanX, rho, error);
+    }
+
+    function writeReports(meanR, meanX, rho, error) {
+      const discussion = document.getElementById("discussion");
+      if (meanR === null || meanX === null || rho === null) {
+        discussion.textContent = "The discussion will be generated automatically after the required observations are entered and calculations are complete.";
+        return;
+      }
+
+      let text = "In this experiment, a meter bridge was used to determine the specific resistance of a given wire. " +
+        "First, the mean radius of the wire was measured using a screw gauge and calculated as " + meanR.toFixed(4) + " cm. " +
+        "Then, by finding the balance points for known resistances, the mean unknown resistance X of the wire was calculated to be " + meanX.toFixed(4) + " \u03a9.\n\n" +
+        "Using the obtained values of resistance, radius, and length of the wire, the specific resistance (\u03c1) was determined as " + rho.toExponential(4) + " \u03a9\u00b7cm. ";
+        
+      if (error !== null) {
+        text += "Comparing this experimental result with the standard value of specific resistance yielded a percentage error of " + error.toFixed(2) + "%. ";
+      }
+
+      text += "\n\nThe potential sources of error in this experiment include instrumental errors like zero error in the screw gauge, variations in the diameter of the wire, parallax errors during the reading of the balance point, and heating effects that could slightly change the wire's resistance during measurements.";
+      
+      discussion.textContent = text;
+    }
+
+    document.addEventListener("input", calculate);
+    window.addEventListener("resize", calculate);
+    calculate();
+  </script>
+</body>
+</html>
